@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="/styles.css" />
+    <script src="/index.js"></script>
+  </head>
+  <body>
+    <div class="topBar">
+      <div class="headerClass">
+        <h1><a class="titleText" href="/">Recommend Me a Movie</a></h1>
+      </div>
+      <div class="signUp">
+        <a class="signUpText" href="/signout">Sign Out</a>
+      </div>
+    </div>
+    <div class="overview">
+      <h2>Add Movie</h2>
+      <div>
+        <form action="/addmovie" method="post">
+          <p>Name</p>
+          <input type="text" id="name" name="name" class="formInput" required />
+          <p>Poster</p>
+          <input
+            type="text"
+            id="poster"
+            name="poster"
+            class="formInput"
+            required
+          />
+          <p>Synopsis</p>
+          <input
+            type="text"
+            id="synopsis"
+            name="synopsis"
+            class="formInput"
+            required
+          />
+          <p>Available On</p>
+          <input
+            type="text"
+            id="availableOn"
+            name="availableOn"
+            class="formInput"
+            required
+          />
+          <p>IMDB</p>
+          <input
+            type="number"
+            step="0.1"
+            id="imdb"
+            name="imdb"
+            class="formInput"
+            required
+          />
+          <p>Age Rating</p>
+          <input
+            type="number"
+            id="ageRating"
+            name="ageRating"
+            class="formInput"
+            required
+          />
+          <p>Genres</p>
+          <input
+            type="text"
+            id="genres"
+            name="genres"
+            class="formInput"
+            required
+          />
+          <p>Length</p>
+          <input
+            type="text"
+            id="length"
+            name="length"
+            class="formInput"
+            required
+          />
+          <p>Year Released</p>
+          <input
+            type="number"
+            id="yearReleased"
+            name="yearReleased"
+            class="formInput"
+            required
+          />
+          <p>Trailer</p>
+          <input
+            type="text"
+            id="trailer"
+            name="trailer"
+            class="formInput"
+            required
+          />
+          <p>Link</p>
+          <input type="text" id="link" name="link" class="formInput" required />
+          <p>Type</p>
+          <input type="text" id="type" name="type" class="formInput" required />
+          <p>Country</p>
+          <input
+            type="text"
+            id="country"
+            name="country"
+            class="formInput"
+            required
+          />
+          <br />
+          <br />
+          <p>Streaming Services</p>
+          <div class="border">
+            <div class="labelClass">
+              <label for="netflix">Netflix</label>
+            </div>
+            <div class="checkboxClass">
+              <input type="checkbox" id="netflix" name="netflix" />
+            </div>
+          </div>
+          <br />
+          <div class="border">
+            <div class="labelClass">
+              <label for="disneyplus">Disney +</label>
+            </div>
+            <div class="checkboxClass">
+              <input type="checkbox" id="disneyplus" name="disneyplus" />
+            </div>
+          </div>
+          <br />
+          <div class="border">
+            <div class="labelClass">
+              <label for="amazonprime">Amazon Prime</label>
+            </div>
+            <div class="checkboxClass">
+              <input type="checkbox" id="amazonprime" name="amazonprime" />
+            </div>
+          </div>
+          <br />
+          <div class="border">
+            <div class="labelClass">
+              <label for="nowtv">Now TV</label>
+            </div>
+            <div class="checkboxClass">
+              <input type="checkbox" id="nowtv" name="nowtv" />
+            </div>
+          </div>
+          <br />
+          <div class="border">
+            <div class="labelClass">
+              <label for="appletv+">Apple TV +</label>
+            </div>
+            <div class="checkboxClass">
+              <input type="checkbox" id="appletvplus" name="appletvplus" />
+            </div>
+          </div>
+          <br />
+          <div class="border">
+            <div class="labelClass">
+              <label for="paramountplus+">Paramount +</label>
+            </div>
+            <div class="checkboxClass">
+              <input type="checkbox" id="paramountplus" name="paramountplus" />
+            </div>
+          </div>
+          <br />
+          <div class="border">
+            <div class="labelClass">
+              <label for="peacock">Peacock</label>
+            </div>
+            <div class="checkboxClass">
+              <input type="checkbox" id="peacock" name="peacock" />
+            </div>
+          </div>
+          <br />
+          <div class="border">
+            <div class="labelClass">
+              <label for="max">Max</label>
+            </div>
+            <div class="checkboxClass">
+              <input type="checkbox" id="max" name="max" />
+            </div>
+          </div>
+          <br />
+          <p>Genres</p>
+          <table>
+            <tr>
+              <td>
+                <div class="borderTable">
+                  <div class="labelClass">
+                    <label for="action">Action</label>
+                  </div>
+                  <div class="checkboxClass">
+                    <input
+                      class="3checkboxes"
+                      type="checkbox"
+                      id="action"
+                      name="action"
+                    />
+                  </div>
+                </div>
+                <br />
+              </td>
+              <td>
+                <div class="borderTable">
+                  <div class="labelClass">
+                    <label for="mystery">Mystery</label>
+                  </div>
+                  <div class="checkboxClass">
+                    <input
+                      class="3checkboxes"
+                      type="checkbox"
+                      id="mystery"
+                      name="mystery"
+                    />
+                  </div>
+                </div>
+                <br />
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="borderTable">
+                  <div class="labelClass">
+                    <label for="comedy">Comedy</label>
+                  </div>
+                  <div class="checkboxClass">
+                    <input
+                      class="3checkboxes"
+                      type="checkbox"
+                      id="comedy"
+                      name="comedy"
+                    />
+                  </div>
+                </div>
+                <br />
+              </td>
+              <td>
+                <div class="borderTable">
+                  <div class="labelClass">
+                    <label for="biography">Biography</label>
+                  </div>
+                  <div class="checkboxClass">
+                    <input
+                      class="3checkboxes"
+                      type="checkbox"
+                      id="biography"
+                      name="biography"
+                    />
+                  </div>
+                </div>
+                <br />
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="borderTable">
+                  <div class="labelClass">
+                    <label for="drama">Drama</label>
+                  </div>
+                  <div class="checkboxClass">
+                    <input
+                      class="3checkboxes"
+                      type="checkbox"
+                      id="drama"
+                      name="drama"
+                    />
+                  </div>
+                </div>
+                <br />
+              </td>
+              <td>
+                <div class="borderTable">
+                  <div class="labelClass">
+                    <label for="history">History</label>
+                  </div>
+                  <div class="checkboxClass">
+                    <input
+                      class="3checkboxes"
+                      type="checkbox"
+                      id="history"
+                      name="history"
+                    />
+                  </div>
+                </div>
+                <br />
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="borderTable">
+                  <div class="labelClass">
+                    <label for="adventure">Adventure</label>
+                  </div>
+                  <div class="checkboxClass">
+                    <input
+                      class="3checkboxes"
+                      type="checkbox"
+                      id="adventure"
+                      name="adventure"
+                    />
+                  </div>
+                </div>
+                <br />
+              </td>
+              <td>
+                <div class="borderTable">
+                  <div class="labelClass">
+                    <label for="animation">Animation</label>
+                  </div>
+                  <div class="checkboxClass">
+                    <input
+                      class="3checkboxes"
+                      type="checkbox"
+                      id="animation"
+                      name="animation"
+                    />
+                  </div>
+                </div>
+                <br />
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="borderTable">
+                  <div class="labelClass">
+                    <label for="thriller">Thriller</label>
+                  </div>
+                  <div class="checkboxClass">
+                    <input
+                      class="3checkboxes"
+                      type="checkbox"
+                      id="thriller"
+                      name="thriller"
+                    />
+                  </div>
+                </div>
+                <br />
+              </td>
+              <td>
+                <div class="borderTable">
+                  <div class="labelClass">
+                    <label for="music">Music</label>
+                  </div>
+                  <div class="checkboxClass">
+                    <input
+                      class="3checkboxes"
+                      type="checkbox"
+                      id="music"
+                      name="music"
+                    />
+                  </div>
+                </div>
+                <br />
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="borderTable">
+                  <div class="labelClass">
+                    <label for="crime">Crime</label>
+                  </div>
+                  <div class="checkboxClass">
+                    <input
+                      class="3checkboxes"
+                      type="checkbox"
+                      id="crime"
+                      name="crime"
+                    />
+                  </div>
+                </div>
+                <br />
+              </td>
+              <td>
+                <div class="borderTable">
+                  <div class="labelClass">
+                    <label for="sport">Sport</label>
+                  </div>
+                  <div class="checkboxClass">
+                    <input
+                      class="3checkboxes"
+                      type="checkbox"
+                      id="sport"
+                      name="sport"
+                    />
+                  </div>
+                </div>
+                <br />
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="borderTable">
+                  <div class="labelClass">
+                    <label for="romance">Romance</label>
+                  </div>
+                  <div class="checkboxClass">
+                    <input
+                      class="3checkboxes"
+                      type="checkbox"
+                      id="romance"
+                      name="romance"
+                    />
+                  </div>
+                </div>
+                <br />
+              </td>
+              <td>
+                <div class="borderTable">
+                  <div class="labelClass">
+                    <label for="superhero">Superhero</label>
+                  </div>
+                  <div class="checkboxClass">
+                    <input
+                      class="3checkboxes"
+                      type="checkbox"
+                      id="superhero"
+                      name="superhero"
+                    />
+                  </div>
+                </div>
+                <br />
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="borderTable">
+                  <div class="labelClass">
+                    <label for="sciencefiction">Science Fiction</label>
+                  </div>
+                  <div class="checkboxClass">
+                    <input
+                      class="3checkboxes"
+                      type="checkbox"
+                      id="sciencefiction"
+                      name="sciencefiction"
+                    />
+                  </div>
+                </div>
+                <br />
+              </td>
+              <td>
+                <div class="borderTable">
+                  <div class="labelClass">
+                    <label for="western">Western</label>
+                  </div>
+                  <div class="checkboxClass">
+                    <input
+                      class="3checkboxes"
+                      type="checkbox"
+                      id="western"
+                      name="western"
+                    />
+                  </div>
+                </div>
+                <br />
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="borderTable">
+                  <div class="labelClass">
+                    <label for="fantasy">Fantasy</label>
+                  </div>
+                  <div class="checkboxClass">
+                    <input
+                      class="3checkboxes"
+                      type="checkbox"
+                      id="fantasy"
+                      name="fantasy"
+                    />
+                  </div>
+                </div>
+                <br />
+              </td>
+              <td>
+                <div class="borderTable">
+                  <div class="labelClass">
+                    <label for="war">War</label>
+                  </div>
+                  <div class="checkboxClass">
+                    <input
+                      class="3checkboxes"
+                      type="checkbox"
+                      id="war"
+                      name="war"
+                    />
+                  </div>
+                </div>
+                <br />
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="borderTable">
+                  <div class="labelClass">
+                    <label for="family">Family</label>
+                  </div>
+                  <div class="checkboxClass">
+                    <input
+                      class="3checkboxes"
+                      type="checkbox"
+                      id="family"
+                      name="family"
+                    />
+                  </div>
+                </div>
+                <br />
+              </td>
+              <td>
+                <div class="borderTable">
+                  <div class="labelClass">
+                    <label for="horror">Horror</label>
+                  </div>
+                  <div class="checkboxClass">
+                    <input
+                      class="3checkboxes"
+                      type="checkbox"
+                      id="horror"
+                      name="horror"
+                    />
+                  </div>
+                </div>
+                <br />
+              </td>
+            </tr>
+          </table>
+          <div></div>
+          <input
+            id="submitButton"
+            name="submitButton"
+            type="submit"
+            value="Continue"
+          />
+        </form>
+        <br />
+      </div>
+    </div>
+    <div class="topBar">
+      <br />
+      <br />
+      <div class="signUp">
+        <a class="signUpText" href="/unitedkingdom">United Kingdom</a>
+        <a class="signUpText" href="/unitedstates">United States</a>
+        <a class="signUpText" href="/australia">Australia</a>
+      </div>
+    </div>
+  </body>
+</html>

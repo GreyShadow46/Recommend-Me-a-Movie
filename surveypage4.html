@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="/styles.css" />
+    <script src="/index.js"></script>
+  </head>
+  <body>
+    <div class="topBar">
+      <div class="headerClass">
+        <h1>Recommend Me a Movie</h1>
+      </div>
+      <div class="signUp">
+        <p id="showUsername" class="signUpText"></p>
+      </div>
+    </div>
+    <div class="overview">
+      <h2>How old would you like the movies/tv shows to be?</h2>
+      <p>Pick One</p>
+      <div>
+        <form action="/surveypage4" method="post">
+          <input type="hidden" name="username" id="username" required />
+          <div class="longBorder">
+            <div class="longLabelClass">
+              <label for="nopreference">Doesn't Matter</label>
+            </div>
+            <div class="checkboxClass">
+              <input
+                type="radio"
+                id="nopreference"
+                name="preference"
+                value="0"
+                checked
+              />
+            </div>
+          </div>
+          <br />
+          <div class="longBorder">
+            <div class="longLabelClass">
+              <label for="last5years">Released in the Last 5 Years</label>
+            </div>
+            <div class="checkboxClass">
+              <input
+                type="radio"
+                id="last5years"
+                name="preference"
+                value="2018"
+              />
+            </div>
+          </div>
+          <br />
+          <div class="longBorder">
+            <div class="longLabelClass">
+              <label for="last10years">Released in the Last 10 Years</label>
+            </div>
+            <div class="checkboxClass">
+              <input
+                type="radio"
+                id="last10years"
+                name="preference"
+                value="2013"
+              />
+            </div>
+          </div>
+          <br />
+          <div class="longBorder">
+            <div class="longLabelClass">
+              <label for="last20years">Released in the Last 20 Years</label>
+            </div>
+            <div class="checkboxClass">
+              <input
+                type="radio"
+                id="last20years"
+                name="preference"
+                value="2003"
+              />
+            </div>
+          </div>
+          <br />
+          <div class="longBorder">
+            <div class="longLabelClass">
+              <label for="last50years">Released in the Last 50 Years</label>
+            </div>
+            <div class="checkboxClass">
+              <input
+                type="radio"
+                id="last50years"
+                name="preference"
+                value="1973"
+              />
+            </div>
+          </div>
+          <br />
+          <input
+            id="submitButton"
+            name="submitButton"
+            type="submit"
+            value="Continue"
+          />
+        </form>
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+      </div>
+    </div>
+    <div class="topBar">
+      <br />
+      <br />
+      <div class="signUp">
+        <a class="signUpText" href="/unitedkingdom">United Kingdom</a>
+        <a class="signUpText" href="/unitedstates">United States</a>
+        <a class="signUpText" href="/australia">Australia</a>
+      </div>
+    </div>
+  </body>
+</html>

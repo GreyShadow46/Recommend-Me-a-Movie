@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="/styles.css" />
+    <script src="/index.js"></script>
+  </head>
+  <body>
+    <div class="topBar">
+      <div class="headerClass">
+        <h1>Recommend Me a Movie</h1>
+      </div>
+      <div class="signUp">
+        <p id="showUsername" class="signUpText"></p>
+      </div>
+    </div>
+    <div class="overview">
+      <h2>Which age ratings do you prefer?</h2>
+      <p>Pick One</p>
+      <div>
+        <form action="/surveypage5" method="post">
+          <div class="border">
+            <div class="labelClass">
+              <label for="any">Any</label>
+            </div>
+            <div class="checkboxClass">
+              <input
+                type="radio"
+                id="any"
+                name="preference"
+                value="100"
+                checked
+              />
+            </div>
+          </div>
+          <br />
+          <div class="border">
+            <div class="labelClass">
+              <label for="15andbelow">15 and below</label>
+            </div>
+            <div class="checkboxClass">
+              <input
+                type="radio"
+                id="15andbelow"
+                name="preference"
+                value="15"
+              />
+            </div>
+          </div>
+          <br />
+          <div class="border">
+            <div class="labelClass">
+              <label for="12andbelow">12 and below</label>
+            </div>
+            <div class="checkboxClass">
+              <input
+                type="radio"
+                id="12andbelow"
+                name="preference"
+                value="12"
+              />
+            </div>
+          </div>
+          <br />
+          <div class="border">
+            <div class="labelClass">
+              <label for="pgandbelow">PG and below</label>
+            </div>
+            <div class="checkboxClass">
+              <input type="radio" id="pgandbelow" name="preference" value="7" />
+            </div>
+          </div>
+          <br />
+          <div class="border">
+            <div class="labelClass">
+              <label for="uonly">U only</label>
+            </div>
+            <div class="checkboxClass">
+              <input type="radio" id="uonly" name="preference" value="1" />
+            </div>
+          </div>
+          <br />
+          <input
+            id="submitButton"
+            name="submitButton"
+            type="submit"
+            value="Continue"
+          />
+        </form>
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+      </div>
+    </div>
+  </body>
+  <div class="topBar">
+    <br />
+    <br />
+    <div class="signUp">
+      <a class="signUpText" href="/unitedkingdom">United Kingdom</a>
+      <a class="signUpText" href="/unitedstates">United States</a>
+      <a class="signUpText" href="/australia">Australia</a>
+    </div>
+  </div>
+</html>
