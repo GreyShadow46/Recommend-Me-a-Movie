@@ -1,0 +1,124 @@
+body {
+  padding: 0;
+  margin: 0;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+}
+
+img {
+  max-width:100%;
+  max-height:100%;
+}
+
+.overview {
+  margin-left: 100px;
+  margin-right: 200px;
+}
+
+.titleText {
+  color: white;
+  text-decoration: none;
+}
+
+.signUpText {
+  color: white;
+  text-decoration: none;
+  margin-left: 100px;
+}
+
+.topBar {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background-color: blue;
+}
+
+.headerClass {
+  flex: 6;
+}
+
+.signUp {
+  flex: 4;
+}
+
+h1 {
+  color: white;
+  margin-left: 100px;
+}
+
+.formInput {
+  width: 300px;
+}
+
+input[type="submit"] {
+  background-color: blue;
+  color: white;
+}
+
+input[type="button"] {
+  background-color: blue;
+  color: white;
+}
+
+.border {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  border: 1px solid black;
+  margin-right: 800px;
+}
+
+.noborder {
+  display: flex;
+  flex-direction: row;
+  margin-right: 400px;
+}
+
+.longBorder {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  border: 1px solid black;
+  margin-right: 700px;
+}
+
+.borderTable {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  border: 1px solid black;
+  margin-right: 30px;
+}
+
+.labelClass {
+  flex: 4
+}
+
+.longLabelClass {
+  flex: 9
+}
+
+.checkboxClass {
+  flex: 1
+}
+
+.recommendationClass {
+  margin-right: 25px;
+}
+
+.disabledTable {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  border: 1px solid grey;
+  color: grey;
+  margin-right: 30px;
+}
+
+.floatLeft {
+  float: left;
+  margin-right: 25px;
+}
+
+td {
+  width: 200px
+}
