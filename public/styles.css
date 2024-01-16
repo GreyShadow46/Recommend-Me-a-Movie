@@ -7,8 +7,6 @@ body {
 img {
   max-width:100%;
   max-height:100%;
-  width: auto;
-  height: auto;
 }
 
 .overview {
@@ -36,7 +34,7 @@ img {
 
 .topBar {
   display: grid;
-  padding: 0;
+  padding: 10px;
   margin: 0;
   background-color: blue;
 }
