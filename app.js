@@ -899,8 +899,8 @@ app.post('/sqlprocessor', function (req, res) {
     console.log("Connected!");
     con.query(req.body.sql, function (err, result, fields) {
       if (err) throw err;
-      console.log("1 record inserted");
+      console.log(result);
     })
-    res.redirect('/addmovie')
+    res.redirect('/sqlprocessor')
   })
 })
