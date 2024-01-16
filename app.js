@@ -30,6 +30,11 @@ let warningMessage = "";
 let successMessage = "";
 let country = "United Kingdom";
 let currentPage = "/";
+const host = "mydb.crqoq4kyy2iw.eu-west-2.rds.amazonaws.com";
+const port = 3306;
+const mySQLUser = "admin";
+const mysSQLPassword = "Nintendomario100!!";
+const database = "mydb";
 
 function sendMail(name, email, subject, message) {
   var transporter = nodemailer.createTransport({
@@ -108,11 +113,11 @@ app.get('/', function (req, res) {
 app.get('/unitedkingdom', function (req, res) {
   country = "United Kingdom"
   var con = mysql.createConnection({
-    host: "mydb.crqoq4kyy2iw.eu-west-2.rds.amazonaws.com",
-    port: 3306,
-    user: "admin",
-    password: "Nintendomario100!!",
-    database: "mydb"
+    host: host,
+    port: port,
+    user: mySQLUser,
+    password: mysSQLPassword,
+    database: database
   });
   
   con.connect(function(err) {
@@ -141,11 +146,11 @@ app.get('/unitedkingdom', function (req, res) {
 app.get('/unitedstates', function (req, res) {
   country = "United States"
   var con = mysql.createConnection({
-    host: "mydb.crqoq4kyy2iw.eu-west-2.rds.amazonaws.com",
-    port: 3306,
-    user: "admin",
-    password: "Nintendomario100!!",
-    database: "mydb"
+    host: host,
+    port: port,
+    user: mySQLUser,
+    password: mysSQLPassword,
+    database: database
   });
   
   con.connect(function(err) {
@@ -174,11 +179,11 @@ app.get('/unitedstates', function (req, res) {
 app.get('/australia', function (req, res) {
   country = "Australia"
   var con = mysql.createConnection({
-    host: "mydb.crqoq4kyy2iw.eu-west-2.rds.amazonaws.com",
-    port: 3306,
-    user: "admin",
-    password: "Nintendomario100!!",
-    database: "mydb"
+    host: host,
+    port: port,
+    user: mySQLUser,
+    password: mysSQLPassword,
+    database: database
   });
   
   con.connect(function(err) {
@@ -224,11 +229,11 @@ app.get('/signup', function (req, res) {
 
 app.post('/signup', (req, res) => {
   var con = mysql.createConnection({
-    host: "mydb.crqoq4kyy2iw.eu-west-2.rds.amazonaws.com",
-    port: 3306,
-    user: "admin",
-    password: "Nintendomario100!!",
-    database: "mydb"
+    host: host,
+    port: port,
+    user: mySQLUser,
+    password: mysSQLPassword,
+    database: database
   });
   
   con.connect(function(err) {
@@ -280,11 +285,11 @@ app.get('/signin', function (req, res) {
 
 app.post('/signin', (req, res) => {
   var con = mysql.createConnection({
-    host: "mydb.crqoq4kyy2iw.eu-west-2.rds.amazonaws.com",
-    port: 3306,
-    user: "admin",
-    password: "Nintendomario100!!",
-    database: "mydb"
+    host: host,
+    port: port,
+    user: mySQLUser,
+    password: mysSQLPassword,
+    database: database
   });
   
   con.connect(function(err) {
@@ -340,11 +345,11 @@ app.get('/forgotyourpassword', function (req, res) {
 
 app.post('/forgotyourpassword', (req, res) => {
   var con = mysql.createConnection({
-    host: "mydb.crqoq4kyy2iw.eu-west-2.rds.amazonaws.com",
-    port: 3306,
-    user: "admin",
-    password: "Nintendomario100!!",
-    database: "mydb"
+    host: host,
+    port: port,
+    user: mySQLUser,
+    password: mysSQLPassword,
+    database: database
   });
   
   con.connect(function(err) {
@@ -379,11 +384,11 @@ app.get('/resetyourpassword', tempSignIn, function (req, res) {
 
 app.post('/resetyourpassword', (req, res) => {
   var con = mysql.createConnection({
-    host: "mydb.crqoq4kyy2iw.eu-west-2.rds.amazonaws.com",
-    port: 3306,
-    user: "admin",
-    password: "Nintendo100!!",
-    database: "mydb"
+    host: host,
+    port: port,
+    user: mySQLUser,
+    password: mysSQLPassword,
+    database: database
   });
   
   con.connect(function(err) {
@@ -427,11 +432,11 @@ app.get('/customerfeedback', function (req, res) {
 
 app.post('/customerfeedback', (req, res) => {
   var con = mysql.createConnection({
-    host: "mydb.crqoq4kyy2iw.eu-west-2.rds.amazonaws.com",
-    port: 3306,
-    user: "admin",
-    password: "Nintendomario100!!",
-    database: "mydb"
+    host: host,
+    port: port,
+    user: mySQLUser,
+    password: mysSQLPassword,
+    database: database
   });
   
   con.connect(function(err) {
@@ -474,11 +479,11 @@ app.get('/surveypage1', checkSignIn, function (req, res) {
 
 app.post('/surveypage1', function (req, res) {
   var con = mysql.createConnection({
-    host: "mydb.crqoq4kyy2iw.eu-west-2.rds.amazonaws.com",
-    port: 3306,
-    user: "admin",
-    password: "Nintendomario100!!",
-    database: "mydb"
+    host: host,
+    port: port,
+    user: mySQLUser,
+    password: mysSQLPassword,
+    database: database
   });
 
   con.connect(function(err) {
@@ -514,11 +519,11 @@ app.get('/surveypage2', checkSignIn, function (req, res) {
 
 app.post('/surveypage2', function (req, res) {
   var con = mysql.createConnection({
-    host: "mydb.crqoq4kyy2iw.eu-west-2.rds.amazonaws.com",
-    port: 3306,
-    user: "admin",
-    password: "Nintendomario100!!",
-    database: "mydb"
+    host: host,
+    port: port,
+    user: mySQLUser,
+    password: mysSQLPassword,
+    database: database
   });
 
   con.connect(function(err) {
@@ -545,11 +550,11 @@ app.post('/surveypage2', function (req, res) {
 app.get('/surveypage3', checkSignIn, function (req, res) {
   currentPage = '/surveypage3'
   var con = mysql.createConnection({
-    host: "mydb.crqoq4kyy2iw.eu-west-2.rds.amazonaws.com",
-    port: 3306,
-    user: "admin",
-    password: "Nintendomario100!!",
-    database: "mydb"
+    host: host,
+    port: port,
+    user: mySQLUser,
+    password: mysSQLPassword,
+    database: database
   });
 
   con.connect(function(err) {
@@ -578,11 +583,11 @@ app.get('/surveypage3', checkSignIn, function (req, res) {
 
 app.post('/surveypage3', function (req, res) {
   var con = mysql.createConnection({
-    host: "mydb.crqoq4kyy2iw.eu-west-2.rds.amazonaws.com",
-    port: 3306,
-    user: "admin",
-    password: "Nintendomario100!!",
-    database: "mydb"
+    host: host,
+    port: port,
+    user: mySQLUser,
+    password: mysSQLPassword,
+    database: database
   });
 
   con.connect(function(err) {
@@ -618,11 +623,11 @@ app.get('/surveypage4', checkSignIn, function (req, res) {
 
 app.post('/surveypage4', function (req, res) {
   var con = mysql.createConnection({
-    host: "mydb.crqoq4kyy2iw.eu-west-2.rds.amazonaws.com",
-    port: 3306,
-    user: "admin",
-    password: "Nintendomario100!!",
-    database: "mydb"
+    host: host,
+    port: port,
+    user: mySQLUser,
+    password: mysSQLPassword,
+    database: database
   });
 
   con.connect(function(err) {
@@ -658,11 +663,11 @@ app.get('/surveypage5', checkSignIn, function (req, res) {
 
 app.post('/surveypage5', function (req, res) {
   var con = mysql.createConnection({
-    host: "mydb.crqoq4kyy2iw.eu-west-2.rds.amazonaws.com",
-    port: 3306,
-    user: "admin",
-    password: "Nintendomario100!!",
-    database: "mydb"
+    host: host,
+    port: port,
+    user: mySQLUser,
+    password: mysSQLPassword,
+    database: database
   });
 
   con.connect(function(err) {
@@ -717,11 +722,11 @@ app.get('/recommendation', checkSignIn, function (req, res) {
 
 app.post('/recommendation', function (req, res) {
   var con = mysql.createConnection({
-    host: "mydb.crqoq4kyy2iw.eu-west-2.rds.amazonaws.com",
-    port: 3306,
-    user: "admin",
-    password: "Nintendomario100!!",
-    database: "mydb"
+    host: host,
+    port: port,
+    user: mySQLUser,
+    password: mysSQLPassword,
+    database: database
   });
   
   con.connect(function(err) {
@@ -762,6 +767,7 @@ app.post('/recommendation', function (req, res) {
         }
       }
       con.query("SELECT DISTINCT mats.name, mats.poster, mats.synopsis, mats.availableOn, mats.imdb as imdb, mats.ageRating, mats.genres, mats.length, mats.yearReleased, mats.trailer, mats.link FROM moviesAndTvShows mats INNER JOIN streamingServices ss ON ss.userName = '" + username +  "' INNER JOIN favouriteGenres fg ON fg.userName = '" + username + "' INNER JOIN movieAge ma ON ma.userName = '" + username + "' INNER JOIN suitableAgeRatings sar ON sar.userName = '" + username  + "' WHERE ((mats.netflix <> '' AND mats.netflix = ss.netflix) OR (mats.disneyPlus <> '' AND mats.disneyPlus = ss.disneyPlus) OR (mats.amazonPrime <> '' AND mats.amazonPrime = ss.amazonPrime) OR (mats.nowTv <> '' AND mats.nowTv = ss.nowTv) OR (mats.appleTvPlus <> '' AND mats.appleTvPlus = ss.appleTvPlus) OR (mats.paramountPlus <> '' AND mats.paramountPlus = ss.paramountPlus) OR (mats.peacock <> '' AND mats.peacock = ss.peacock) OR (mats.max <> '' AND mats.max = ss.max)) AND ((mats.action <> '' AND mats.action = fg.action) OR (mats.comedy <> '' AND mats.comedy = fg.comedy) OR (mats.drama <> '' AND mats.drama = fg.drama) OR (mats.adventure <> '' AND mats.adventure = fg.adventure) OR (mats.crime <> '' AND mats.crime = fg.crime) OR (mats.romance <> '' AND mats.romance = fg.romance) OR (mats.scienceFiction <> '' AND mats.scienceFiction = fg.scienceFiction) OR (mats.fantasy <> '' AND mats.fantasy = fg.fantasy) OR (mats.family <> '' AND mats.family = fg.family) OR (mats.mystery <> '' AND mats.mystery = fg.mystery) OR (mats.biography <> '' AND mats.biography = fg.biography) OR (mats.history <> '' AND mats.history = fg.history) OR (mats.animation <> '' AND mats.animation = fg.animation) OR (mats.music <> '' AND mats.music = fg.music) OR (mats.sport <> '' AND mats.sport =  fg.sport) OR (mats.superhero <> '' AND mats.superhero  = fg.superhero) OR (mats.western <> '' AND mats.western = fg.western) OR (mats.war <> '' AND mats.war = fg.war) OR (mats.horror <> '' AND mats.horror = fg.horror)) AND mats.yearReleased >= ma.preference AND mats.country = '" + country + "' AND mats.ageRating <= sar.preference" + type() + " ORDER BY imdb DESC;", function (err, result, fields) {
+        console.log(result)
         if (i < result.length){
           currentMovie = {name: result[i].name, preference: req.body.preference, poster: result[i].poster, synopsis: result[i].synopsis, availableOn: result[i].availableOn, imdb: result[i].imdb, ageRating: result[i].ageRating, genres: result[i].genres, length: result[i].length, yearReleased: result[i].yearReleased, trailer: result[i].trailer, link: result[i].link};
           res.redirect('/recommendation');
@@ -787,7 +793,8 @@ app.post('/recommendation', function (req, res) {
         }
         else {
           con.query("SELECT DISTINCT mats.name, mats.poster, mats.synopsis, mats.availableOn, mats.imdb as imdb, mats.ageRating, mats.genres, mats.length, mats.yearReleased, mats.trailer, mats.link FROM moviesAndTvShows mats INNER JOIN streamingServices ss ON ss.userName = '" + username +  "' INNER JOIN favouriteGenres fg ON fg.userName = '" + username + "' INNER JOIN leastFavouriteGenres lfg ON fg.userName = '" + username + "' INNER JOIN movieAge ma ON ma.userName = '" + username + "' INNER JOIN suitableAgeRatings sar ON sar.userName = '" + username  +"' WHERE ((mats.netflix <> '' AND mats.netflix = ss.netflix) OR (mats.disneyPlus <> '' AND mats.disneyPlus = ss.disneyPlus) OR (mats.amazonPrime <> '' AND mats.amazonPrime = ss.amazonPrime) OR (mats.nowTv <> '' AND mats.nowTv = ss.nowTv) OR (mats.appleTvPlus <> '' AND mats.appleTvPlus = ss.appleTvPlus)) AND ((mats.action <> '' AND mats.action <> fg.action) OR (mats.comedy <> '' AND mats.comedy <> fg.comedy) OR (mats.drama <> '' AND mats.drama <> fg.drama) OR (mats.adventure <> '' AND mats.adventure <> fg.adventure) OR (mats.crime <> '' AND mats.crime <> fg.crime) OR (mats.romance <> '' AND mats.romance <> fg.romance) OR (mats.scienceFiction <> '' AND mats.scienceFiction = fg.scienceFiction) OR (mats.fantasy <> '' AND mats.fantasy <> fg.fantasy) OR (mats.family <> '' AND mats.family <> fg.family) OR (mats.mystery <> '' AND mats.mystery <> fg.mystery) OR (mats.biography <> '' AND mats.biography <> fg.biography) OR (mats.history <> '' AND mats.history <> fg.history) OR (mats.animation <> '' AND mats.animation <> fg.animation) OR (mats.music <> '' AND mats.music <> fg.music) OR (mats.sport <> '' AND mats.sport <>  fg.sport) OR (mats.superhero <> '' AND mats.superhero <> fg.superhero) OR (mats.western <> '' AND mats.western <> fg.western) OR (mats.war <> '' AND mats.war <> fg.war) OR (mats.horror <> '' AND mats.horror <> fg.horror))AND ((mats.action <> '' AND mats.action <> lfg.action) OR (mats.comedy <> '' AND mats.comedy <> lfg.comedy) OR (mats.drama <> '' AND mats.drama <> lfg.drama) OR (mats.adventure <> '' AND mats.adventure <> lfg.adventure) OR (mats.crime <> '' AND mats.crime <> lfg.crime) OR (mats.romance <> '' AND mats.romance <> lfg.romance) OR (mats.scienceFiction <> '' AND mats.scienceFiction <> lfg.scienceFiction) OR (mats.fantasy <> '' AND mats.fantasy <> lfg.fantasy) OR (mats.family <> '' AND mats.family <> lfg.family) OR (mats.mystery <> '' AND mats.mystery <> lfg.mystery) OR (mats.biography <> '' AND mats.biography <> lfg.biography) OR (mats.history <> '' AND mats.history <> lfg.history) OR (mats.animation <> '' AND mats.animation <> lfg.animation) OR (mats.music <> '' AND mats.music <> lfg.music) OR (mats.sport <> '' AND mats.sport <> lfg.sport) OR (mats.superhero <> '' AND mats.superhero <> lfg.superhero) OR (mats.western <> '' AND mats.western <> lfg.western) OR (mats.war <> '' AND mats.war <> lfg.war) OR (mats.horror <> '' AND mats.horror <> lfg.horror)) AND mats.yearReleased >= ma.preference AND mats.country = '" + country + "' AND mats.ageRating <= sar.preference" + type() + " ORDER BY imdb DESC;" , function (err, result, fields) {
-          if(j < (result.length - 1)){
+          console.log(result);
+            if(j < (result.length - 1)){
             currentMovie = {name: result[j].name, preference: req.body.preference, poster: result[j].poster, synopsis: result[j].synopsis, availableOn: result[j].availableOn, imdb: result[j].imdb, ageRating: result[j].ageRating, genres: result[j].genres, length: result[j].length, yearReleased: result[j].yearReleased, trailer: result[j].trailer, link: result[j].link};
             res.redirect('/recommendation');
             j++;
@@ -857,11 +864,11 @@ app.get('/addmovie', checkAdminSignIn, function (req, res) {
 
 app.post('/addmovie', function (req, res) {
   var con = mysql.createConnection({
-    host: "mydb.crqoq4kyy2iw.eu-west-2.rds.amazonaws.com",
-    port: 3306,
-    user: "admin",
-    password: "Nintendomario100!!",
-    database: "mydb"
+    host: host,
+    port: port,
+    user: mySQLUser,
+    password: mysSQLPassword,
+    database: database
   });
   
   con.connect(function(err) {
@@ -887,11 +894,11 @@ app.get('/sqlprocessor', checkAdminSignIn, function (req, res) {
 
 app.post('/sqlprocessor', function (req, res) {
   var con = mysql.createConnection({
-    host: "mydb.crqoq4kyy2iw.eu-west-2.rds.amazonaws.com",
-    port: 3306,
-    user: "admin",
-    password: "Nintendomario100!!",
-    database: "mydb"
+    host: host,
+    port: port,
+    user: mySQLUser,
+    password: mysSQLPassword,
+    database: database
   });
   
   con.connect(function(err) {
