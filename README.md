@@ -1,1 +1,1 @@
-This is a Movie Recommendation System that I made as a final year project. The program is only runnable currently as a Node.JS app. If you wish to view it clone the repository and make sure Node.JS is installed. Then open a terminal with the root of the folder which is called Recommend-Me-A-Movie. Then type in 'node app.js' in the terminal and go to 127.0.0.1:8080 in your web address bar to view the website.
+The website is now online go to http://ec2-13-41-200-144.eu-west-2.compute.amazonaws.com:8080/ to view
