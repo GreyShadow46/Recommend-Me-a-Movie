@@ -1,1 +1,1 @@
-The website is now online go to http://ec2-13-41-200-144.eu-west-2.compute.amazonaws.com:8080/ to view
+This is a movie recommendation website I made as part of a final year project. The website is viewable on mobile and desktop. The desktop styles may not be ideal because of the switch to mobile support. Additionally, the mobile site cannot view images of the recommendations for an unknown reason. This issue is being worked on. The link to the wbsite is http://ec2-13-41-200-144.eu-west-2.compute.amazonaws.com:8080/
