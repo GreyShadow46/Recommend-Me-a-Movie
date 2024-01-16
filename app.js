@@ -251,7 +251,7 @@ app.post('/signup', (req, res) => {
           if (err) throw err;
           console.log("1 record inserted");
         })
-        sendMail(req.body.username, req.body.email, "Verify your Email", 'Please press this <a href="http://127.0.0.1:8080/surveypage1">button</a> to verify your account');
+        sendMail(req.body.username, req.body.email, "Verify your Email", 'Please press this <a href="http://ec2-13-41-200-144.eu-west-2.compute.amazonaws.com:8080/surveypage1">button</a> to verify your account');
         let newUser = {username: req.body.username, password: req.body.password};
         req.session.user = newUser;
         res.redirect('/verifyemail');
@@ -283,7 +283,7 @@ app.post('/signin', (req, res) => {
     host: "mydb.crqoq4kyy2iw.eu-west-2.rds.amazonaws.com",
     port: 3306,
     user: "admin",
-    password: "Nintendomario100!",
+    password: "Nintendomario100!!",
     database: "mydb"
   });
   
@@ -875,7 +875,7 @@ app.post('/addmovie', function (req, res) {
   })
 })
 
-app.get('/sqlprocessor', function (req, res) {
+app.get('/sqlprocessor', checkAdminSignIn, function (req, res) {
   currentPage = '/sqlprocessor'
   fs.readFile('sqlprocessor.html', function(err, data) {
     if (err) throw err;
