@@ -4,7 +4,6 @@ const app = express();
 const mysql = require('mysql');
 const CryptoJS = require("crypto-js");
 const nodemailer = require('nodemailer');
-// const fetch = require('node-fetch');
 let session = require('express-session');
 let cookieParser = require('cookie-parser');
 
@@ -31,43 +30,6 @@ let warningMessage = "";
 let successMessage = "";
 let country = "United Kingdom";
 let currentPage = "/";
-// let tvShowList = [];
-
-// const options = {
-//   method: 'GET',
-//   headers: {
-//     accept: 'application/json',
-//     Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI5NmFkNzYzYTZhNzFhMjc0Y2E4ZDc2NDEyODFmNjk4ZiIsInN1YiI6IjY0MGY0YzE4MzIzZWJhMDBjNWViNTFjOCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ._CeBq1sRj6aPEMOddmsB0H03nnYjzVjC_cYzr0AxEHY'
-//   }
-// };
-
-// fetch('https://api.themoviedb.org/3/tv/top_rated?language=en-UK', options)
-// .then(res => res.json())
-// .then(json => {
-//   const tvShows = json.results
-//   for(i = 0; i < tvShows.length; i++){
-//     if(tvShows[i].id){
-//       fetch('https://api.themoviedb.org/3/tv/' + tvShows[i].id + '/watch/providers', options)
-//       .then(res1 => res1.json())
-//       .then(json1 => {
-//         const providers = json1.results.GB;
-//           for(let k = 0; k < providers.length; k++){
-//             for(j = 0; j < providers.length; j++){
-//               if(providers.flatrate[j].provider_id === 8 || providers.flatrate[j].provider_id === 9 || providers.flatrate[j].provider_id === 337 || providers.flatrate[j].provider_id === 350 || providers.flatrate[j].provider_id === 39){
-//                 tvShowList.push(json1.id)
-//               }
-//             }
-//           }
-//       })
-//       .catch(err => console.error('error:' + err));
-//     } 
-// }
-// })
-// .catch(err => console.error('error:' + err));
-
-// setTimeout(() => {
-//   console.log(tvShowList)
-// }, 10000)
 
 function sendMail(name, email, subject, message) {
   var transporter = nodemailer.createTransport({
@@ -146,9 +108,10 @@ app.get('/', function (req, res) {
 app.get('/unitedkingdom', function (req, res) {
   country = "United Kingdom"
   var con = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "Nintendo100!",
+    host: "mydb.crqoq4kyy2iw.eu-west-2.rds.amazonaws.com",
+    port: 3306,
+    user: "admin",
+    password: "Nintendomario100!!",
     database: "mydb"
   });
   
@@ -178,9 +141,10 @@ app.get('/unitedkingdom', function (req, res) {
 app.get('/unitedstates', function (req, res) {
   country = "United States"
   var con = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "Nintendo100!",
+    host: "mydb.crqoq4kyy2iw.eu-west-2.rds.amazonaws.com",
+    port: 3306,
+    user: "admin",
+    password: "Nintendomario100!!",
     database: "mydb"
   });
   
@@ -210,9 +174,10 @@ app.get('/unitedstates', function (req, res) {
 app.get('/australia', function (req, res) {
   country = "Australia"
   var con = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "Nintendo100!",
+    host: "mydb.crqoq4kyy2iw.eu-west-2.rds.amazonaws.com",
+    port: 3306,
+    user: "admin",
+    password: "Nintendomario100!!",
     database: "mydb"
   });
   
@@ -259,9 +224,10 @@ app.get('/signup', function (req, res) {
 
 app.post('/signup', (req, res) => {
   var con = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "Nintendo100!",
+    host: "mydb.crqoq4kyy2iw.eu-west-2.rds.amazonaws.com",
+    port: 3306,
+    user: "admin",
+    password: "Nintendomario100!!",
     database: "mydb"
   });
   
@@ -314,9 +280,10 @@ app.get('/signin', function (req, res) {
 
 app.post('/signin', (req, res) => {
   var con = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "Nintendo100!",
+    host: "mydb.crqoq4kyy2iw.eu-west-2.rds.amazonaws.com",
+    port: 3306,
+    user: "admin",
+    password: "Nintendomario100!",
     database: "mydb"
   });
   
@@ -373,9 +340,10 @@ app.get('/forgotyourpassword', function (req, res) {
 
 app.post('/forgotyourpassword', (req, res) => {
   var con = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "Nintendo100!",
+    host: "mydb.crqoq4kyy2iw.eu-west-2.rds.amazonaws.com",
+    port: 3306,
+    user: "admin",
+    password: "Nintendomario100!!",
     database: "mydb"
   });
   
@@ -411,9 +379,10 @@ app.get('/resetyourpassword', tempSignIn, function (req, res) {
 
 app.post('/resetyourpassword', (req, res) => {
   var con = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "Nintendo100!",
+    host: "mydb.crqoq4kyy2iw.eu-west-2.rds.amazonaws.com",
+    port: 3306,
+    user: "admin",
+    password: "Nintendo100!!",
     database: "mydb"
   });
   
@@ -458,9 +427,10 @@ app.get('/customerfeedback', function (req, res) {
 
 app.post('/customerfeedback', (req, res) => {
   var con = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "Nintendo100!",
+    host: "mydb.crqoq4kyy2iw.eu-west-2.rds.amazonaws.com",
+    port: 3306,
+    user: "admin",
+    password: "Nintendomario100!!",
     database: "mydb"
   });
   
@@ -504,9 +474,10 @@ app.get('/surveypage1', checkSignIn, function (req, res) {
 
 app.post('/surveypage1', function (req, res) {
   var con = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "Nintendo100!",
+    host: "mydb.crqoq4kyy2iw.eu-west-2.rds.amazonaws.com",
+    port: 3306,
+    user: "admin",
+    password: "Nintendomario100!!",
     database: "mydb"
   });
 
@@ -543,9 +514,10 @@ app.get('/surveypage2', checkSignIn, function (req, res) {
 
 app.post('/surveypage2', function (req, res) {
   var con = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "Nintendo100!",
+    host: "mydb.crqoq4kyy2iw.eu-west-2.rds.amazonaws.com",
+    port: 3306,
+    user: "admin",
+    password: "Nintendomario100!!",
     database: "mydb"
   });
 
@@ -573,9 +545,10 @@ app.post('/surveypage2', function (req, res) {
 app.get('/surveypage3', checkSignIn, function (req, res) {
   currentPage = '/surveypage3'
   var con = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "Nintendo100!",
+    host: "mydb.crqoq4kyy2iw.eu-west-2.rds.amazonaws.com",
+    port: 3306,
+    user: "admin",
+    password: "Nintendomario100!!",
     database: "mydb"
   });
 
@@ -605,9 +578,10 @@ app.get('/surveypage3', checkSignIn, function (req, res) {
 
 app.post('/surveypage3', function (req, res) {
   var con = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "Nintendo100!",
+    host: "mydb.crqoq4kyy2iw.eu-west-2.rds.amazonaws.com",
+    port: 3306,
+    user: "admin",
+    password: "Nintendomario100!!",
     database: "mydb"
   });
 
@@ -644,9 +618,10 @@ app.get('/surveypage4', checkSignIn, function (req, res) {
 
 app.post('/surveypage4', function (req, res) {
   var con = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "Nintendo100!",
+    host: "mydb.crqoq4kyy2iw.eu-west-2.rds.amazonaws.com",
+    port: 3306,
+    user: "admin",
+    password: "Nintendomario100!!",
     database: "mydb"
   });
 
@@ -683,9 +658,10 @@ app.get('/surveypage5', checkSignIn, function (req, res) {
 
 app.post('/surveypage5', function (req, res) {
   var con = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "Nintendo100!",
+    host: "mydb.crqoq4kyy2iw.eu-west-2.rds.amazonaws.com",
+    port: 3306,
+    user: "admin",
+    password: "Nintendomario100!!",
     database: "mydb"
   });
 
@@ -741,9 +717,10 @@ app.get('/recommendation', checkSignIn, function (req, res) {
 
 app.post('/recommendation', function (req, res) {
   var con = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "Nintendo100!",
+    host: "mydb.crqoq4kyy2iw.eu-west-2.rds.amazonaws.com",
+    port: 3306,
+    user: "admin",
+    password: "Nintendomario100!!",
     database: "mydb"
   });
   
@@ -880,9 +857,10 @@ app.get('/addmovie', checkAdminSignIn, function (req, res) {
 
 app.post('/addmovie', function (req, res) {
   var con = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "Nintendo100!",
+    host: "mydb.crqoq4kyy2iw.eu-west-2.rds.amazonaws.com",
+    port: 3306,
+    user: "admin",
+    password: "Nintendomario100!!",
     database: "mydb"
   });
   
@@ -890,6 +868,36 @@ app.post('/addmovie', function (req, res) {
     if (err) throw err;
     console.log("Connected!");
     con.query("INSERT INTO moviesAndTvShows (name, poster, synopsis, availableOn, imdb, ageRating, genres, length, yearReleased, trailer, link, type, netflix, disneyPlus, amazonPrime, nowTv, appleTvPlus, action, comedy, drama, adventure, thriller, crime, romance, scienceFiction, fantasy, family, mystery, biography, history, animation, music, sport, superhero, western, war, horror, country, paramountPlus, peacock, max) VALUES ('" + req.body.name + "', '" + req.body.poster + "', '" + req.body.synopsis + "', '" + req.body.availableOn + "', " + req.body.imdb + ", " + req.body.ageRating + ", '" + req.body.genres + "', '" + req.body.length + "', " + req.body.yearReleased + ", '" + req.body.trailer + "', '" + req.body.link + "', '" + req.body.type + "', '" + (req.body.netflix ?? "") + "', '" + (req.body.disneyplus ?? "") + "', '" + (req.body.amazonprime ?? "") + "', '" + (req.body.nowtv ?? "") + "', '" + (req.body.appletvplus ?? "") + "', '" + (req.body.action ?? "") + "', '" + (req.body.comedy ?? "") + "', '" + (req.body.drama ?? "") + "', '" + (req.body.adventure ?? "") + "', '" + (req.body.thriller ?? "") + "', '" + (req.body.crime ?? "") + "', '" + (req.body.romance ?? "") + "', '" + (req.body.scienceFiction ?? "") + "', '" + (req.body.fantasy ?? "") + "', '" + (req.body.family ?? "") + "', '" + (req.body.mystery ?? "") + "', '" + (req.body.biography ?? "") + "', '" + (req.body.history ?? "") + "', '" + (req.body.animation ?? "") + "', '" + (req.body.music ?? "") + "', '" + (req.body.sport ?? "") + "', '" + (req.body.superhero ?? "") + "', '" + (req.body.western ?? "") + "', '" + (req.body.war ?? "") + "', '" + (req.body.horror ?? "") + "', '" + (req.body.country ?? "") + "', '" + (req.body.paramountplus ?? "") + "', '" + (req.body.peacock ?? "") + "', '" + (req.body.max ?? "") + "')", function (err, result, fields) {
+      if (err) throw err;
+      console.log("1 record inserted");
+    })
+    res.redirect('/addmovie')
+  })
+})
+
+app.get('/sqlprocessor', function (req, res) {
+  currentPage = '/sqlprocessor'
+  fs.readFile('sqlprocessor.html', function(err, data) {
+    if (err) throw err;
+    res.writeHead(200, {'Content-Type': 'text/html'});
+    res.write(data);
+    return res.end();
+  });
+})
+
+app.post('/sqlprocessor', function (req, res) {
+  var con = mysql.createConnection({
+    host: "mydb.crqoq4kyy2iw.eu-west-2.rds.amazonaws.com",
+    port: 3306,
+    user: "admin",
+    password: "Nintendomario100!!",
+    database: "mydb"
+  });
+  
+  con.connect(function(err) {
+    if (err) throw err;
+    console.log("Connected!");
+    con.query(req.body.sql, function (err, result, fields) {
       if (err) throw err;
       console.log("1 record inserted");
     })
