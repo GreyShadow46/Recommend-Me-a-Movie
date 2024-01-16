@@ -10,13 +10,14 @@ img {
 }
 
 .overview {
-  margin-left: 100px;
-  margin-right: 200px;
+  margin-left: 10px;
+  margin-right: 20px;
 }
 
 .titleText {
   color: white;
   text-decoration: none;
+  font-size: large;
 }
 
 .signUpText {
@@ -25,19 +26,17 @@ img {
   margin-left: 100px;
 }
 
+.countryText {
+  color: white;
+  text-decoration: none;
+  margin-left: 30px;
+}
+
 .topBar {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
+  display: grid;
+  padding: 0;
+  margin: 0;
   background-color: blue;
-}
-
-.headerClass {
-  flex: 6;
-}
-
-.signUp {
-  flex: 4;
 }
 
 h1 {
