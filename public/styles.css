@@ -154,6 +154,8 @@ input[type="button"] {
 
   .noborder {
     display: grid;
+    padding: 10px;
+    margin: 0;
   }
 
   .recommendationClass {
