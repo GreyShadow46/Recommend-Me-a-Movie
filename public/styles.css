@@ -10,14 +10,14 @@ img {
 }
 
 .overview {
-  margin-left: 10px;
-  margin-right: 20px;
+  margin-left: 100px;
+  margin-right: 200px;
 }
 
 .titleText {
   color: white;
   text-decoration: none;
-  font-size: large;
+  margin-left: 100px;
 }
 
 .signUpText {
@@ -26,22 +26,77 @@ img {
   margin-left: 100px;
 }
 
-.countryText {
-  color: white;
-  text-decoration: none;
-  margin-left: 30px;
-}
-
 .topBar {
-  display: grid;
-  padding: 10px;
-  margin: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
   background-color: blue;
 }
 
-h1 {
+.headerClass {
+  flex: 6;
+}
+
+.signUp {
+  flex: 4;
+}
+
+.countryText {
   color: white;
+  text-decoration: none;
   margin-left: 100px;
+}
+
+.noborder {
+  display: flex;
+  flex-direction: row;
+  margin-right: 400px;
+}
+
+@media screen and (max-width: 600px) {
+  .topBar {
+    display: grid;
+    padding: 10px;
+    margin: 0;
+    background-color: blue;
+  }
+
+  .overview {
+    margin-left: 10px;
+    margin-right: 20px;
+  }
+  
+  .titleText {
+    color: white;
+    text-decoration: none;
+    margin-left: 100px;
+    font-size: large;
+  }
+  
+  .signUpText {
+    color: white;
+    text-decoration: none;
+    margin-left: 100px;
+  }
+
+  .headerClass {
+    
+  }
+  
+  .signUp {
+    
+  }
+  
+  
+  .countryText {
+    color: white;
+    text-decoration: none;
+    margin-left: 30px;
+  }
+
+  .noborder {
+    
+  }
 }
 
 .formInput {
@@ -64,12 +119,6 @@ input[type="button"] {
   align-items: center;
   border: 1px solid black;
   margin-right: 800px;
-}
-
-.noborder {
-  display: flex;
-  flex-direction: row;
-  margin-right: 400px;
 }
 
 .longBorder {
@@ -121,3 +170,4 @@ input[type="button"] {
 td {
   width: 200px
 }
+
