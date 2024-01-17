@@ -152,6 +152,10 @@ input[type="button"] {
     margin-right: 100px;
   }
 
+  .noborder {
+    
+  }
+
   .recommendationClass {
     margin-bottom: 25px;
   }
