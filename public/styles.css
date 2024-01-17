@@ -153,7 +153,7 @@ input[type="button"] {
   }
 
   .noborder {
-    
+    display: grid;
   }
 
   .recommendationClass {
