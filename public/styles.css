@@ -141,7 +141,7 @@ input[type="button"] {
     flex-direction: row;
     align-items: center;
     border: 1px solid black;
-    margin-right: 400px;
+    margin-right: 200px;
   }
 
   .longBorder {
@@ -153,7 +153,7 @@ input[type="button"] {
   }
 
   .recommendationClass {
-    
+    margin-right: 0;
   }
 }
 
