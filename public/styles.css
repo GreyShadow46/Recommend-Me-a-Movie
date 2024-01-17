@@ -95,6 +95,11 @@ input[type="button"] {
   margin-bottom: 25px;
 }
 
+.floatLeft {
+  float: left;
+  margin-right: 25px;
+}
+
 @media screen and (max-width: 600px) {
   .topBar {
     display: grid;
@@ -168,6 +173,10 @@ input[type="button"] {
     height: 400px;
     width: 400px;
   }
+
+  .floatLeft {
+
+  }
 }
 
 .labelClass {
@@ -189,11 +198,6 @@ input[type="button"] {
   border: 1px solid grey;
   color: grey;
   margin-right: 30px;
-}
-
-.floatLeft {
-  float: left;
-  margin-right: 25px;
 }
 
 td {
