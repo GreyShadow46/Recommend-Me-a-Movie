@@ -175,7 +175,14 @@ input[type="button"] {
   }
 
   .floatLeft {
-    margin-left: 200px;
+    margin-left: 400px;
+  }
+
+  input[type=submit] {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-right: 200px;
   }
 }
 
