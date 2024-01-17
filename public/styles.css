@@ -174,10 +174,6 @@ input[type="button"] {
     width: 400px;
   }
 
-  .floatLeft {
-    margin-left: 400px;
-  }
-
   input[type=submit] {
     display: flex;
     flex-direction: row;
