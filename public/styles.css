@@ -53,6 +53,48 @@ img {
   margin-right: 400px;
 }
 
+.formInput {
+  width: 300px;
+}
+
+input[type="submit"] {
+  background-color: blue;
+  color: white;
+}
+
+input[type="button"] {
+  background-color: blue;
+  color: white;
+}
+
+.longBorder {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  border: 1px solid black;
+  margin-right: 700px;
+}
+
+.border {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  border: 1px solid black;
+  margin-right: 800px;
+}
+
+.borderTable {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  border: 1px solid black;
+  margin-right: 30px;
+}
+
+.recommendationClass {
+  margin-right: 25px;
+}
+
 @media screen and (max-width: 600px) {
   .topBar {
     display: grid;
@@ -94,47 +136,25 @@ img {
     margin-left: 30px;
   }
 
-  .noborder {
+  .border {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    border: 1px solid black;
+    margin-right: 400px;
+  }
+
+  .longBorder {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    border: 1px solid black;
+    margin-right: 100px;
+  }
+
+  .recommendationClass {
     
   }
-}
-
-.formInput {
-  width: 300px;
-}
-
-input[type="submit"] {
-  background-color: blue;
-  color: white;
-}
-
-input[type="button"] {
-  background-color: blue;
-  color: white;
-}
-
-.border {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  border: 1px solid black;
-  margin-right: 800px;
-}
-
-.longBorder {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  border: 1px solid black;
-  margin-right: 700px;
-}
-
-.borderTable {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  border: 1px solid black;
-  margin-right: 30px;
 }
 
 .labelClass {
@@ -147,10 +167,6 @@ input[type="button"] {
 
 .checkboxClass {
   flex: 1
-}
-
-.recommendationClass {
-  margin-right: 25px;
 }
 
 .disabledTable {
@@ -170,4 +186,3 @@ input[type="button"] {
 td {
   width: 200px
 }
-
