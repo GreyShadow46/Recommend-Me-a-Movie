@@ -13,7 +13,7 @@ app.use(express.json());
 
 app.use(cookieParser());
 app.use(session(
-  {secret: "***"}, 
+  {secret: "Shh, its a secret!"}, 
   {cookie: 30 * 24 * 60 * 60 * 1000}, 
   {saveUninitialized: true}, 
   {resave: true}, 
@@ -33,7 +33,7 @@ let currentPage = "/";
 const host = "mydb.crqoq4kyy2iw.eu-west-2.rds.amazonaws.com";
 const port = 3306;
 const mySQLUser = "admin";
-const mysSQLPassword = "***";
+const mysSQLPassword = "Nintendomario100!!";
 const database = "mydb";
 
 function sendMail(name, email, subject, message) {
@@ -41,7 +41,7 @@ function sendMail(name, email, subject, message) {
     service: 'gmail',
     auth: {
         user: 'recommendmeamovie1@gmail.com',
-        pass: '***'
+        pass: 'kvke jgpo iniv mspe'
     }
    });
    var mailOptions = {
