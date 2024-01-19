@@ -64,6 +64,15 @@ function sendMail(name, email, subject, message) {
    });
 }
 
+function checkAdminSignIn(req, res, next){
+  if(req.session.user && req.session.user.username == "GreyShadow46"){
+    next()
+  }
+  else {
+    res.send("You are not authorised to view this page")
+  }
+}
+
 function checkSignIn(req, res, next){
   if(req.session.user){
     username = req.session.user.username;
@@ -841,7 +850,7 @@ app.get('/signout', checkSignIn, function (req, res) {
   res.redirect('/');
 })
 
-app.get('/addmovie', function (req, res) {
+app.get('/addmovie', checkAdminSignIn, function (req, res) {
   currentPage = '/addmovie'
   fs.readFile('addmovie.html', function(err, data) {
     if (err) throw err;
@@ -871,7 +880,7 @@ app.post('/addmovie', function (req, res) {
   })
 })
 
-app.get('/sqlprocessor', function (req, res) {
+app.get('/sqlprocessor', checkAdminSignIn, function (req, res) {
   currentPage = '/sqlprocessor'
   fs.readFile('sqlprocessor.html', function(err, data) {
     if (err) throw err;
