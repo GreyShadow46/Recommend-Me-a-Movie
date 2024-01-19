@@ -64,15 +64,6 @@ function sendMail(name, email, subject, message) {
    });
 }
 
-function checkAdminSignIn(req, res, next){
-  if(req.session.user && req.session.user.username == "GreyShadow46"){
-    next()
-  }
-  else {
-    res.send("You are not authorised to view this page")
-  }
-}
-
 function checkSignIn(req, res, next){
   if(req.session.user){
     username = req.session.user.username;
@@ -766,7 +757,7 @@ app.post('/recommendation', function (req, res) {
           return ""
         }
       }
-      con.query("SELECT DISTINCT mats.name, mats.poster, mats.synopsis, mats.availableOn, mats.imdb as imdb, mats.ageRating, mats.genres, mats.length, mats.yearReleased, mats.trailer, mats.link FROM moviesAndTvShows mats INNER JOIN streamingServices ss ON ss.userName = '" + username +  "' INNER JOIN favouriteGenres fg ON fg.userName = '" + username + "' INNER JOIN movieAge ma ON ma.userName = '" + username + "' INNER JOIN suitableAgeRatings sar ON sar.userName = '" + username  + "' WHERE ((mats.netflix <> '' AND mats.netflix = ss.netflix) OR (mats.disneyPlus <> '' AND mats.disneyPlus = ss.disneyPlus) OR (mats.amazonPrime <> '' AND mats.amazonPrime = ss.amazonPrime) OR (mats.nowTv <> '' AND mats.nowTv = ss.nowTv) OR (mats.appleTvPlus <> '' AND mats.appleTvPlus = ss.appleTvPlus) OR (mats.peacock <> '' AND mats.peacock = ss.peacock) OR (mats.hulu <> '' AND mats.huly = ss.hulu) OR (mats.max <> '' AND mats.max = ss.max)) AND ((mats.action <> '' AND mats.action = fg.action) OR (mats.comedy <> '' AND mats.comedy = fg.comedy) OR (mats.drama <> '' AND mats.drama = fg.drama) OR (mats.adventure <> '' AND mats.adventure = fg.adventure) OR (mats.crime <> '' AND mats.crime = fg.crime) OR (mats.romance <> '' AND mats.romance = fg.romance) OR (mats.scienceFiction <> '' AND mats.scienceFiction = fg.scienceFiction) OR (mats.fantasy <> '' AND mats.fantasy = fg.fantasy) OR (mats.family <> '' AND mats.family = fg.family) OR (mats.mystery <> '' AND mats.mystery = fg.mystery) OR (mats.biography <> '' AND mats.biography = fg.biography) OR (mats.history <> '' AND mats.history = fg.history) OR (mats.animation <> '' AND mats.animation = fg.animation) OR (mats.music <> '' AND mats.music = fg.music) OR (mats.sport <> '' AND mats.sport =  fg.sport) OR (mats.superhero <> '' AND mats.superhero  = fg.superhero) OR (mats.western <> '' AND mats.western = fg.western) OR (mats.war <> '' AND mats.war = fg.war) OR (mats.horror <> '' AND mats.horror = fg.horror)) AND mats.yearReleased >= ma.preference AND mats.country = '" + country + "' AND mats.ageRating <= sar.preference" + type() + " ORDER BY imdb DESC;", function (err, result, fields) {
+      con.query("SELECT DISTINCT mats.name, mats.poster, mats.synopsis, mats.availableOn, mats.imdb as imdb, mats.ageRating, mats.genres, mats.length, mats.yearReleased, mats.trailer, mats.link FROM moviesAndTvShows mats INNER JOIN streamingServices ss ON ss.userName = '" + username +  "' INNER JOIN favouriteGenres fg ON fg.userName = '" + username + "' INNER JOIN movieAge ma ON ma.userName = '" + username + "' INNER JOIN suitableAgeRatings sar ON sar.userName = '" + username  + "' WHERE ((mats.netflix <> '' AND mats.netflix = ss.netflix) OR (mats.disneyPlus <> '' AND mats.disneyPlus = ss.disneyPlus) OR (mats.amazonPrime <> '' AND mats.amazonPrime = ss.amazonPrime) OR (mats.nowTv <> '' AND mats.nowTv = ss.nowTv) OR (mats.appleTvPlus <> '' AND mats.appleTvPlus = ss.appleTvPlus) OR (mats.peacock <> '' AND mats.peacock = ss.peacock) OR (mats.hulu <> '' AND mats.hulu = ss.hulu) OR (mats.max <> '' AND mats.max = ss.max)) AND ((mats.action <> '' AND mats.action = fg.action) OR (mats.comedy <> '' AND mats.comedy = fg.comedy) OR (mats.drama <> '' AND mats.drama = fg.drama) OR (mats.adventure <> '' AND mats.adventure = fg.adventure) OR (mats.crime <> '' AND mats.crime = fg.crime) OR (mats.romance <> '' AND mats.romance = fg.romance) OR (mats.scienceFiction <> '' AND mats.scienceFiction = fg.scienceFiction) OR (mats.fantasy <> '' AND mats.fantasy = fg.fantasy) OR (mats.family <> '' AND mats.family = fg.family) OR (mats.mystery <> '' AND mats.mystery = fg.mystery) OR (mats.biography <> '' AND mats.biography = fg.biography) OR (mats.history <> '' AND mats.history = fg.history) OR (mats.animation <> '' AND mats.animation = fg.animation) OR (mats.music <> '' AND mats.music = fg.music) OR (mats.sport <> '' AND mats.sport =  fg.sport) OR (mats.superhero <> '' AND mats.superhero  = fg.superhero) OR (mats.western <> '' AND mats.western = fg.western) OR (mats.war <> '' AND mats.war = fg.war) OR (mats.horror <> '' AND mats.horror = fg.horror)) AND mats.yearReleased >= ma.preference AND mats.country = '" + country + "' AND mats.ageRating <= sar.preference" + type() + " ORDER BY imdb DESC;", function (err, result, fields) {
         if (i < result.length){
           currentMovie = {name: result[i].name, preference: req.body.preference, poster: result[i].poster, synopsis: result[i].synopsis, availableOn: result[i].availableOn, imdb: result[i].imdb, ageRating: result[i].ageRating, genres: result[i].genres, length: result[i].length, yearReleased: result[i].yearReleased, trailer: result[i].trailer, link: result[i].link};
           res.redirect('/recommendation');
@@ -850,7 +841,7 @@ app.get('/signout', checkSignIn, function (req, res) {
   res.redirect('/');
 })
 
-app.get('/addmovie', checkAdminSignIn, function (req, res) {
+app.get('/addmovie', function (req, res) {
   currentPage = '/addmovie'
   fs.readFile('addmovie.html', function(err, data) {
     if (err) throw err;
@@ -880,7 +871,7 @@ app.post('/addmovie', function (req, res) {
   })
 })
 
-app.get('/sqlprocessor', checkAdminSignIn, function (req, res) {
+app.get('/sqlprocessor', function (req, res) {
   currentPage = '/sqlprocessor'
   fs.readFile('sqlprocessor.html', function(err, data) {
     if (err) throw err;
