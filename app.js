@@ -815,7 +815,7 @@ app.get('/signout', checkSignIn, function (req, res) {
   res.redirect('/');
 })
 
-app.get('/addmovie', checkAdminSignIn, function (req, res) {
+app.get('/addmovie', function (req, res) {
   currentPage = '/addmovie'
   fs.readFile('addmovie.html', function(err, data) {
     if (err) throw err;
@@ -845,7 +845,7 @@ app.post('/addmovie', function (req, res) {
   })
 })
 
-app.get('/sqlprocessor', checkAdminSignIn, function (req, res) {
+app.get('/sqlprocessor', function (req, res) {
   currentPage = '/sqlprocessor'
   fs.readFile('sqlprocessor.html', function(err, data) {
     if (err) throw err;
