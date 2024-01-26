@@ -223,7 +223,7 @@ app.post('/signup', (req, res) => {
           if (err) throw err;
           console.log("1 record inserted");
         })
-        sendMail(req.body.username, req.body.email, "Verify your Email", 'Please press this <a href="http://ec2-13-41-200-144.eu-west-2.compute.amazonaws.com:8080/surveypage1">button</a> to verify your account');
+        sendMail(req.body.username, req.body.email, "Verify your Email", 'Please press this <a href="http://ec2-35-178-87-154.eu-west-2.compute.amazonaws.com:8080/surveypage1">button</a> to verify your account');
         let newUser = {username: req.body.username, password: req.body.password};
         req.session.user = newUser;
         res.redirect('/verifyemail');
@@ -325,7 +325,7 @@ app.post('/forgotyourpassword', (req, res) => {
     con.query("SELECT * FROM accounts WHERE userName = '" + req.body.username + "' AND emailAddress = '" + req.body.email + "'", function (err, result, fields) {
       if(result.length !== 0){
         username = req.body.username;
-        sendMail(username, req.body.email, "Reset Your Password", 'Please press this <a href="http://ec2-13-41-200-144.eu-west-2.compute.amazonaws.com:8080/resetyourpassword">button</a> to proceed');
+        sendMail(username, req.body.email, "Reset Your Password", 'Please press this <a href="http://ec2-35-178-87-154.eu-west-2.compute.amazonaws.com:8080//resetyourpassword">button</a> to proceed');
         res.redirect('/verifyemail');
       }
       else {
