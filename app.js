@@ -316,7 +316,7 @@ app.post('/signin', (req, res) => {
       }
   })
 })
-
+})
 
 app.get('/forgotyourpassword', function (req, res) {
   currentPage = '/forgotyourpassword'
