@@ -178,7 +178,7 @@ app.get('/unitedstates', function (req, res) {
 
 app.get('/signup', function (req, res) {
   currentPage = '/signup'
-  let data = '<!DOCTYPE html><html><head><meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="stylesheet" href="/styles.css" /><script src="/index.js"></script></head><body><div class="topBar"><div class="headerClass"><h1><a class="titleText" href="/">Recommend Me a Movie</a></h1></div></div><div class="overview"><h2>Create Account</h2><form method="post" action="/signup" onsubmit="return checkPassword()"><p>Username</p><input type="text" id="username" name="username" class="formInput" required/><p>Password</p><input type="password" id="password" name="password" class="formInput" required/><p>Retype Password</p><input type="password" id="retypePassword" name="retypePassword" class="formInput" required/><span id="matchingPassword"></span><p>Email</p><input type="email" id="email" name="email" class="formInput" required/><br /><br /><input type="checkbox" id="agreeToTerms" name="agreeToTerms" onkeyup="checkTerms()" required/><label for="agreeToTerms">I agree to the Recommend Me a Movie <a href>Terms of Use</a> and<a href>Privacy Policy</a></label><span id="checkedTerms"></span><br /><br /><input id="submitButton" name="submitButton" type="submit" value="Continue"/></form><span id="warningMessage" style="color:red;">' + warningMessage + '</span><p>Already have an account? <a href="/signin">Sign in</a></p><br></div><div class="topBar"><br /><br /><div><a class="countryText" href="/unitedkingdom">United Kingdom</a><a class="countryText" href="/unitedstates">United States</a></div></div></body></html>'
+  let data = '<!DOCTYPE html><html><head><meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="stylesheet" href="/styles.css" /><script src="/index.js"></script></head><body><div class="topBar"><div class="headerClass"><h1><a class="titleText" href="/">Recommend Me a Movie</a></h1></div></div><div class="overview"><h2>Create Account</h2><form method="post" action="/signup" onsubmit="return checkPassword()"><p>Username</p><input type="text" id="username" name="username" class="formInput" required/><p>Password (Must contain: one number, one lower and upper case letter, at least 8 characters)</p><input type="password" id="password" name="password" class="formInput" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" required/><p>Retype Password</p><input type="password" id="retypePassword" name="retypePassword" class="formInput" required/><span id="matchingPassword"></span><p>Email</p><input type="email" id="email" name="email" class="formInput" required/><br /><br /><input type="checkbox" id="agreeToTerms" name="agreeToTerms" onkeyup="checkTerms()" required/><label for="agreeToTerms">I agree to the Recommend Me a Movie <a href>Terms of Use</a> and<a href>Privacy Policy</a></label><span id="checkedTerms"></span><br /><br /><input id="submitButton" name="submitButton" type="submit" value="Continue"/></form><span id="warningMessage" style="color:red;">' + warningMessage + '</span><p>Already have an account? <a href="/signin">Sign in</a></p><br></div><div class="topBar"><br /><br /><div><a class="countryText" href="/unitedkingdom">United Kingdom</a><a class="countryText" href="/unitedstates">United States</a></div></div></body></html>'
   fs.writeFile("signup.html", data, (err) => {
     if (err)
       console.log(err);
@@ -215,7 +215,7 @@ app.post('/signup', (req, res) => {
         }, 2000)
       }
       else {
-        con.query("INSERT INTO accounts (userName, emailAddress, password) VALUES ('" + req.body.username + "', '" + req.body.email + "', '" + CryptoJS.AES.encrypt(req.body.password, key) + "')", function (err, result) {
+        con.query("INSERT INTO accounts (userName, emailAddress, password, attempts) VALUES ('" + req.body.username + "', '" + req.body.email + "', '" + CryptoJS.AES.encrypt(req.body.password, key) + "',0" +")", function (err, result) {
           if (err) throw err;
           console.log("1 record inserted");
         });
@@ -262,10 +262,17 @@ app.post('/signin', (req, res) => {
   con.connect(function(err) {
     if (err) throw err;
     console.log("Connected!");
-    con.query("SELECT password FROM accounts WHERE userName = '" + req.body.username + "'", function (err, result, fields) {
+    con.query("SELECT * FROM accounts WHERE userName = '" + req.body.username + "'", function (err, result, fields) {
       if(result.length !== 0){
         const decrypted = CryptoJS.AES.decrypt(result[0].password, key)
-        if(decrypted.toString(CryptoJS.enc.Utf8) === req.body.password){
+        if (result[0].attempts > 3){
+          warningMessage = "Your account is locked please try again in 24 hours"
+          res.redirect('/signin')
+          setTimeout(() => {
+            warningMessage = ""
+          }, 2000)
+        }
+        else if (decrypted.toString(CryptoJS.enc.Utf8) === req.body.password){
           let user = {username: req.body.username, password: req.body.password};
           req.session.user = user;          
           con.query("SELECT * FROM country WHERE userName = '" + req.body.username + "'", function (err, result, fields) {
@@ -274,7 +281,11 @@ app.post('/signin', (req, res) => {
           res.redirect('/surveypage6')
         }
         else {
-          warningMessage = "Username and/or password not found!"
+          con.query("UPDATE accounts SET attempts = " + (result[0].attempts + 1) + " WHERE userName = '" + req.body.username + "'", function (err, result, fields) {
+            if(err) throw err
+            console.log("1 record updated");
+          })
+          warningMessage = "Password not found you have " + (3 - result[0].attempts).toString() + " remaining!"
           res.redirect('/signin')
           setTimeout(() => {
             warningMessage = ""
@@ -282,7 +293,7 @@ app.post('/signin', (req, res) => {
         }
       }
       else {
-        warningMessage = "Username and/or password not found!"
+        warningMessage = "Username not found!"
         res.redirect('/signin')
         setTimeout(() => {
           warningMessage = ""
