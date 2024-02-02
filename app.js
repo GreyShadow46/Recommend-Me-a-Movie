@@ -233,8 +233,6 @@ app.post('/signup', (req, res) => {
 })
 
 app.get('/signin', function (req, res) {
-  console.log(new Date().getTime())
-  console.log(new Date().getTime() + (1 * 24 * 60 * 60 * 1000))
   currentPage = '/signin'
   let data = '<!DOCTYPE html><html><head><meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="stylesheet" href="/styles.css" /><script src="/index.js"></script></head><body><div class="topBar"><div class="headerClass"><h1><a class="titleText" href="/">Recommend Me a Movie</a></h1></div></div><div class="overview"><h2>Sign In</h2><div><form action="/signin" method="post"><p>Username</p><input type="text" id="username" name="username" class="formInput" required/><p>Password</p><input type="password" id="password" name="password" class="formInput" required/><br /><br /><input id="submitButton" name="submitButton" type="submit" value="Sign In"/></form><span id="warningMessage" style="color:red;">' + warningMessage + '</span><br /><a href="/forgotyourpassword">Forgot your Password?</a><br /><a href="/signup">Sign up</a><br><br><br><br><br><br><br><br><br><br><br><br></div></div><div class="topBar"><br /><br /><div><a class="countryText" href="/unitedkingdom">United Kingdom</a><a class="countryText" href="/unitedstates">United States</a></div></div></body></html>'
   fs.writeFile("signin.html", data, (err) => {
@@ -267,11 +265,17 @@ app.post('/signin', (req, res) => {
     con.query("SELECT * FROM accounts WHERE userName = '" + req.body.username + "'", function (err, result, fields) {
       if(result.length !== 0){
         if(result[0].bannedTime !== ''){
-          if(new Date().getTime() < (result[0].bannedTime + (60 * 60 * 24 * 1000))){
-            con.query("UPDATE accounts SET attempts = 0 WHERE userName = '" + req.body.username + "'", function (err, result, fields) {
+          if(new Date().getTime() < (result[0].bannedTime + (1 * 24 * 60 * 60 * 1000))){
+            con.query("UPDATE accounts SET attempts = 0, bannedTime = '' WHERE userName = '" + req.body.username + "'", function (err, result, fields) {
               if(err) throw err
               console.log("1 record updated");
             })
+          } else {
+            warningMessage = "Your account is locked please try again later"
+            res.redirect('/signin')
+            setTimeout(() => {
+              warningMessage = ""
+            }, 2000)
           }
         }
         else {
