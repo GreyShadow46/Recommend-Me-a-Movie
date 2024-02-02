@@ -299,8 +299,12 @@ app.post('/signin', (req, res) => {
           else if (decrypted.toString(CryptoJS.enc.Utf8) === req.body.password){
             let user = {username: req.body.username, password: req.body.password};
             req.session.user = user;          
+            con.query("UPDATE accounts SET attempts = 0 WHERE userName = '" + req.body.username + "'", function (err, result, fields) {
+              if(err) throw err
+              console.log("1 record updated");
+            })
             con.query("SELECT * FROM country WHERE userName = '" + req.body.username + "'", function (err, result, fields) {
-                country = result[0].country;
+              country = result[0].country;
             })
             res.redirect('/surveypage6')
           }
