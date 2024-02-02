@@ -306,15 +306,15 @@ app.post('/signin', (req, res) => {
             res.redirect('/surveypage6')
           }
           else {
-            con.query("UPDATE accounts SET attempts = " + (result[0].attempts + 1) + " WHERE userName = '" + req.body.username + "'", function (err, result, fields) {
-              if(err) throw err
-              console.log("1 record updated");
-            })
             warningMessage = "Password not found you have " + (2 - result[0].attempts).toString() + " attempt(s) remaining!"
             res.redirect('/signin')
             setTimeout(() => {
               warningMessage = ""
             }, 2000)
+            con.query("UPDATE accounts SET attempts = " + (result[0].attempts + 1) + " WHERE userName = '" + req.body.username + "'", function (err, result, fields) {
+              if(err) throw err
+              console.log("1 record updated");
+            })
           }
         }
       }
