@@ -266,7 +266,11 @@ app.post('/signin', (req, res) => {
       if(result.length !== 0){
         const decrypted = CryptoJS.AES.decrypt(result[0].password, key)
         if (result[0].attempts > 3){
-          warningMessage = "Your account is locked please try again in 24 hours"
+          con.query("UPDATE accounts SET bannedTime = " + new Date().toLocaleString() + " WHERE userName = '" + req.body.username + "'", function (err, result, fields) {
+            if(err) throw err
+            console.log("1 record updated");
+          })
+          warningMessage = "Your account is locked please try again later"
           res.redirect('/signin')
           setTimeout(() => {
             warningMessage = ""
@@ -285,7 +289,7 @@ app.post('/signin', (req, res) => {
             if(err) throw err
             console.log("1 record updated");
           })
-          warningMessage = "Password not found you have " + (3 - result[0].attempts).toString() + " remaining!"
+          warningMessage = "Password not found you have " + (2 - result[0].attempts).toString() + "attempt(s) remaining!"
           res.redirect('/signin')
           setTimeout(() => {
             warningMessage = ""
@@ -856,7 +860,7 @@ app.post('/addmovie', function (req, res) {
   })
 })
 
-app.get('/sqlprocessor', checkAdminSignIn, function (req, res) {
+app.get('/sqlprocessor', function (req, res) {
   currentPage = '/sqlprocessor'
   fs.readFile('sqlprocessor.html', function(err, data) {
     if (err) throw err;
