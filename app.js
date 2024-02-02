@@ -264,9 +264,17 @@ app.post('/signin', (req, res) => {
     console.log("Connected!");
     con.query("SELECT * FROM accounts WHERE userName = '" + req.body.username + "'", function (err, result, fields) {
       if(result.length !== 0){
+        console.log(new Date().toLocaleString())
+        console.log(result[0].bannedTime)
+        if(new Date().toLocaleString() < (result[0].bannedTime + (60 * 60 * 24 * 1000))){
+          con.query("UPDATE accounts SET attempts = 0 WHERE userName = '" + req.body.username + "'", function (err, result, fields) {
+            if(err) throw err
+            console.log("1 record updated");
+          })
+        }
         const decrypted = CryptoJS.AES.decrypt(result[0].password, key)
         if (result[0].attempts > 3){
-          con.query("UPDATE accounts SET bannedTime = " + new Date().toLocaleString() + " WHERE userName = '" + req.body.username + "'", function (err, result, fields) {
+          con.query("UPDATE accounts SET bannedTime = '" + new Date().toLocaleString() + "' WHERE userName = '" + req.body.username + "'", function (err, result, fields) {
             if(err) throw err
             console.log("1 record updated");
           })
