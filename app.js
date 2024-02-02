@@ -233,6 +233,7 @@ app.post('/signup', (req, res) => {
 })
 
 app.get('/signin', function (req, res) {
+  console.log(new Date().getTime())
   currentPage = '/signin'
   let data = '<!DOCTYPE html><html><head><meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="stylesheet" href="/styles.css" /><script src="/index.js"></script></head><body><div class="topBar"><div class="headerClass"><h1><a class="titleText" href="/">Recommend Me a Movie</a></h1></div></div><div class="overview"><h2>Sign In</h2><div><form action="/signin" method="post"><p>Username</p><input type="text" id="username" name="username" class="formInput" required/><p>Password</p><input type="password" id="password" name="password" class="formInput" required/><br /><br /><input id="submitButton" name="submitButton" type="submit" value="Sign In"/></form><span id="warningMessage" style="color:red;">' + warningMessage + '</span><br /><a href="/forgotyourpassword">Forgot your Password?</a><br /><a href="/signup">Sign up</a><br><br><br><br><br><br><br><br><br><br><br><br></div></div><div class="topBar"><br /><br /><div><a class="countryText" href="/unitedkingdom">United Kingdom</a><a class="countryText" href="/unitedstates">United States</a></div></div></body></html>'
   fs.writeFile("signin.html", data, (err) => {
@@ -264,44 +265,46 @@ app.post('/signin', (req, res) => {
     console.log("Connected!");
     con.query("SELECT * FROM accounts WHERE userName = '" + req.body.username + "'", function (err, result, fields) {
       if(result.length !== 0){
-        console.log(new Date().getTime())
-        console.log(result[0].bannedTime + (60 * 60 * 24 * 1000))
-        if(new Date().getTime() < (result[0].bannedTime + (60 * 60 * 24 * 1000))){
-          con.query("UPDATE accounts SET attempts = 0 WHERE userName = '" + req.body.username + "'", function (err, result, fields) {
-            if(err) throw err
-            console.log("1 record updated");
-          })
-        }
-        const decrypted = CryptoJS.AES.decrypt(result[0].password, key)
-        if (result[0].attempts >= 3){
-          con.query("UPDATE accounts SET bannedTime = '" + new Date().getTime() + "' WHERE userName = '" + req.body.username + "'", function (err, result, fields) {
-            if(err) throw err
-            console.log("1 record updated");
-          })
-          warningMessage = "Your account is locked please try again later"
-          res.redirect('/signin')
-          setTimeout(() => {
-            warningMessage = ""
-          }, 2000)
-        }
-        else if (decrypted.toString(CryptoJS.enc.Utf8) === req.body.password){
-          let user = {username: req.body.username, password: req.body.password};
-          req.session.user = user;          
-          con.query("SELECT * FROM country WHERE userName = '" + req.body.username + "'", function (err, result, fields) {
-              country = result[0].country;
-          })
-          res.redirect('/surveypage6')
+        if(result[0].bannedTime !== ''){
+          if(new Date().getTime() < (result[0].bannedTime + (60 * 60 * 24 * 1000))){
+            con.query("UPDATE accounts SET attempts = 0 WHERE userName = '" + req.body.username + "'", function (err, result, fields) {
+              if(err) throw err
+              console.log("1 record updated");
+            })
+          }
         }
         else {
-          con.query("UPDATE accounts SET attempts = " + (result[0].attempts + 1) + " WHERE userName = '" + req.body.username + "'", function (err, result, fields) {
-            if(err) throw err
-            console.log("1 record updated");
-          })
-          warningMessage = "Password not found you have " + (2 - result[0].attempts).toString() + " attempt(s) remaining!"
-          res.redirect('/signin')
-          setTimeout(() => {
-            warningMessage = ""
-          }, 2000)
+          const decrypted = CryptoJS.AES.decrypt(result[0].password, key)
+          if (result[0].attempts >= 3){
+            con.query("UPDATE accounts SET bannedTime = '" + new Date().getTime() + "' WHERE userName = '" + req.body.username + "'", function (err, result, fields) {
+              if(err) throw err
+              console.log("1 record updated");
+            })
+            warningMessage = "Your account is locked please try again later"
+            res.redirect('/signin')
+            setTimeout(() => {
+              warningMessage = ""
+            }, 2000)
+          }
+          else if (decrypted.toString(CryptoJS.enc.Utf8) === req.body.password){
+            let user = {username: req.body.username, password: req.body.password};
+            req.session.user = user;          
+            con.query("SELECT * FROM country WHERE userName = '" + req.body.username + "'", function (err, result, fields) {
+                country = result[0].country;
+            })
+            res.redirect('/surveypage6')
+          }
+          else {
+            con.query("UPDATE accounts SET attempts = " + (result[0].attempts + 1) + " WHERE userName = '" + req.body.username + "'", function (err, result, fields) {
+              if(err) throw err
+              console.log("1 record updated");
+            })
+            warningMessage = "Password not found you have " + (2 - result[0].attempts).toString() + " attempt(s) remaining!"
+            res.redirect('/signin')
+            setTimeout(() => {
+              warningMessage = ""
+            }, 2000)
+          }
         }
       }
       else {
@@ -311,9 +314,9 @@ app.post('/signin', (req, res) => {
           warningMessage = ""
         }, 2000)
       }
-    })
   })
 })
+
 
 app.get('/forgotyourpassword', function (req, res) {
   currentPage = '/forgotyourpassword'
