@@ -265,7 +265,7 @@ app.post('/signin', (req, res) => {
     con.query("SELECT * FROM accounts WHERE userName = '" + req.body.username + "'", function (err, result, fields) {
       if(result.length !== 0){
         console.log(new Date().toLocaleString())
-        console.log(result[0].bannedTime)
+        console.log(result[0].bannedTime + (60 * 60 * 24 * 1000))
         if(new Date().toLocaleString() < (result[0].bannedTime + (60 * 60 * 24 * 1000))){
           con.query("UPDATE accounts SET attempts = 0 WHERE userName = '" + req.body.username + "'", function (err, result, fields) {
             if(err) throw err
