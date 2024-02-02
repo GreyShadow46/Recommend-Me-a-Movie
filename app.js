@@ -266,13 +266,18 @@ app.post('/signin', (req, res) => {
       if(result.length !== 0){
         console.log(result[0].bannedTime)
         if(result[0].bannedTime !== ''){
-          if(new Date().getTime() < (result[0].bannedTime + (1 * 24 * 60 * 60 * 1000))){
+          if((result[0].bannedTime + (1 * 24 * 60 * 60 * 1000) <= new Date().getTime())){
             con.query("UPDATE accounts SET attempts = 0, bannedTime = '' WHERE userName = '" + req.body.username + "'", function (err, result, fields) {
               if(err) throw err
               console.log("1 record updated");
+              warningMessage = "Your account has been unlocked please enter your username and password!"
+              res.redirect('/signin')
+              setTimeout(() => {
+                warningMessage = ""
+              }, 2000)
             })
           } else {
-            warningMessage = "Your account is locked please try again later"
+            warningMessage = "Your account is locked please try again later!"
             res.redirect('/signin')
             setTimeout(() => {
               warningMessage = ""
@@ -286,7 +291,7 @@ app.post('/signin', (req, res) => {
               if(err) throw err
               console.log("1 record updated");
             })
-            warningMessage = "Your account is locked please try again later"
+            warningMessage = "Your account is locked please try again later!"
             res.redirect('/signin')
             setTimeout(() => {
               warningMessage = ""
