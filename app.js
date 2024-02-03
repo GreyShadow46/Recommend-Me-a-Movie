@@ -306,7 +306,7 @@ app.post('/signin', (req, res) => {
     con.query("SELECT * FROM accounts WHERE userName = '" + req.body.username + "'", function (err, account, fields) {
       if(account.length !== 0){
         if(account[0].bannedTime !== ''){
-          if((account[0].bannedTime + (1 * 24 * 60 * 60 * 1000) <= new Date().getTime())){
+          if((account[0].bannedTime + (1 * 24 * 60 * 60 * 1000)) <= new Date().getTime()){
             con.query("UPDATE accounts SET attempts = 0, bannedTime = '' WHERE userName = '" + req.body.username + "'", function (err, result, fields) {
               if(err) throw err
               console.log("1 record updated");
