@@ -251,6 +251,13 @@ app.get('/signin', function (req, res) {
 })
 
 const passwordCheck = (account, username, password, req) => {
+  var con = mysql.createConnection({
+    host: host,
+    port: port,
+    user: mySQLUser,
+    password: mysSQLPassword,
+    database: database
+  });
   const decrypted = CryptoJS.AES.decrypt(account[0].password, key)
   if (account[0].attempts >= 2){
     con.query("UPDATE accounts SET bannedTime = '" + new Date().getTime() + "' WHERE userName = '" + username + "'", function (err, result, fields) {
