@@ -252,7 +252,7 @@ app.get('/signin', function (req, res) {
 
 const passwordCheck = (account, req, res, con) => {
   const decrypted = CryptoJS.AES.decrypt(account[0].password, key)
-  if (account[0].attempts > 2){
+  if (account[0].attempts > 3){
     con.query("UPDATE accounts SET bannedTime = '" + new Date().getTime() + "' WHERE userName = '" + req.body.username + "'", function (err, result, fields) {
       if(err) throw err
       console.log("1 record updated");
@@ -282,12 +282,12 @@ const passwordCheck = (account, req, res, con) => {
     })
     con.query("SELECT attempts FROM accounts WHERE userName = '" + req.body.username + "'", function (err, attempt, fields) {
       if(err) throw err
-      warningMessage = "Password not found you have " + (4 - attempt[0].attempts).toString() + " attempt(s) remaining!"
+      warningMessage = "Password not found you have " + (5 - attempt[0].attempts).toString() + " attempt(s) remaining!"
       res.redirect('/signin')
       setTimeout(() => {
         warningMessage = ""
       }, 2000)
-    })  
+    })
   }
 }
 
