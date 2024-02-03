@@ -280,7 +280,7 @@ const passwordCheck = (account, req, res, con) => {
       if(err) throw err
       console.log("1 record updated");
     })
-    warningMessage = "Password not found you have " + (2 - account[0].attempts).toString() + " attempt(s) remaining!"
+    warningMessage = "Password not found you have " + (3 - account[0].attempts).toString() + " attempt(s) remaining!"
     res.redirect('/signin')
     setTimeout(() => {
       warningMessage = ""
