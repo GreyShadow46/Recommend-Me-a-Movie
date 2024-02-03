@@ -280,11 +280,14 @@ const passwordCheck = (account, req, res, con) => {
       if(err) throw err
       console.log("1 record updated");
     })
-    warningMessage = "Password not found you have " + (3 - account[0].attempts).toString() + " attempt(s) remaining!"
-    res.redirect('/signin')
-    setTimeout(() => {
-      warningMessage = ""
-    }, 2000)
+    con.query("SELECT attempts FROM accounts WHERE userName = '" + req.body.username + "'", function (err, attempt, fields) {
+      if(err) throw err
+      warningMessage = "Password not found you have " + (3 - attempt[0].attempts).toString() + " attempt(s) remaining!"
+      res.redirect('/signin')
+      setTimeout(() => {
+        warningMessage = ""
+      }, 2000)
+    })  
   }
 }
 
