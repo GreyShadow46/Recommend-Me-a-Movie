@@ -250,7 +250,7 @@ app.get('/signin', function (req, res) {
   });
 })
 
-const passwordCheck = (account, username, password) => {
+const passwordCheck = (account, username, password, req) => {
   const decrypted = CryptoJS.AES.decrypt(account[0].password, key)
   if (account[0].attempts >= 2){
     con.query("UPDATE accounts SET bannedTime = '" + new Date().getTime() + "' WHERE userName = '" + username + "'", function (err, result, fields) {
@@ -307,7 +307,7 @@ app.post('/signin', (req, res) => {
             con.query("UPDATE accounts SET attempts = 0, bannedTime = '' WHERE userName = '" + req.body.username + "'", function (err, result, fields) {
               if(err) throw err
               console.log("1 record updated");
-              passwordCheck(account, req.body.username, req.body.password)
+              passwordCheck(account, req.body.username, req.body.password, req)
             })
           } else {
             warningMessage = "Your account is locked please try again later!"
@@ -318,7 +318,7 @@ app.post('/signin', (req, res) => {
           }
         }
         else {
-          passwordCheck(account, req.body.username, req.body.password)
+          passwordCheck(account, req.body.username, req.body.password, req)
         }
       }
       else {
