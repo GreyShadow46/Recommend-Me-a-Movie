@@ -250,10 +250,10 @@ app.get('/signin', function (req, res) {
   });
 })
 
-const passwordCheck = (result, username, password) => {
-  const decrypted = CryptoJS.AES.decrypt(result[0].password, key)
-  if (result[0].attempts >= 2){
-    con.query("UPDATE accounts SET bannedTime = '" + new Date().getTime() + "' WHERE userName = '" + req.body.username + "'", function (err, result, fields) {
+const passwordCheck = (account, username, password) => {
+  const decrypted = CryptoJS.AES.decrypt(account[0].password, key)
+  if (account[0].attempts >= 2){
+    con.query("UPDATE accounts SET bannedTime = '" + new Date().getTime() + "' WHERE userName = '" + username + "'", function (err, result, fields) {
       if(err) throw err
       console.log("1 record updated");
     })
@@ -270,17 +270,17 @@ const passwordCheck = (result, username, password) => {
       if(err) throw err
       console.log("1 record updated");
     })
-    con.query("SELECT * FROM country WHERE userName = '" + username + "'", function (err, result, fields) {
-      country = result[0].country;
+    con.query("SELECT * FROM country WHERE userName = '" + username + "'", function (err, country, fields) {
+      country = country[0].country;
     })
     res.redirect('/surveypage6')
   }
   else {
-    con.query("UPDATE accounts SET attempts = " + (result[0].attempts + 1) + " WHERE userName = '" + req.body.username + "'", function (err, result, fields) {
+    con.query("UPDATE accounts SET attempts = " + (account[0].attempts + 1) + " WHERE userName = '" + username + "'", function (err, result, fields) {
       if(err) throw err
       console.log("1 record updated");
     })
-    warningMessage = "Password not found you have " + (2 - result[0].attempts).toString() + " attempt(s) remaining!"
+    warningMessage = "Password not found you have " + (2 - account[0].attempts).toString() + " attempt(s) remaining!"
     res.redirect('/signin')
     setTimeout(() => {
       warningMessage = ""
@@ -300,14 +300,14 @@ app.post('/signin', (req, res) => {
   con.connect(function(err) {
     if (err) throw err;
     console.log("Connected!");
-    con.query("SELECT * FROM accounts WHERE userName = '" + req.body.username + "'", function (err, result, fields) {
-      if(result.length !== 0){
-        if(result[0].bannedTime !== ''){
-          if((result[0].bannedTime + (1 * 24 * 60 * 60 * 1000) <= new Date().getTime())){
+    con.query("SELECT * FROM accounts WHERE userName = '" + req.body.username + "'", function (err, account, fields) {
+      if(account.length !== 0){
+        if(account[0].bannedTime !== ''){
+          if((account[0].bannedTime + (1 * 24 * 60 * 60 * 1000) <= new Date().getTime())){
             con.query("UPDATE accounts SET attempts = 0, bannedTime = '' WHERE userName = '" + req.body.username + "'", function (err, result, fields) {
               if(err) throw err
               console.log("1 record updated");
-              passwordCheck(result, req.body.username, req.body.password)
+              passwordCheck(account, req.body.username, req.body.password)
             })
           } else {
             warningMessage = "Your account is locked please try again later!"
@@ -318,7 +318,7 @@ app.post('/signin', (req, res) => {
           }
         }
         else {
-          passwordCheck(result, req.body.username, req.body.password)
+          passwordCheck(account, req.body.username, req.body.password)
         }
       }
       else {
