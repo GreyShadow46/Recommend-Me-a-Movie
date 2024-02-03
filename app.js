@@ -250,6 +250,44 @@ app.get('/signin', function (req, res) {
   });
 })
 
+const passwordCheck = (result, username, password) => {
+  const decrypted = CryptoJS.AES.decrypt(result[0].password, key)
+  if (result[0].attempts >= 2){
+    con.query("UPDATE accounts SET bannedTime = '" + new Date().getTime() + "' WHERE userName = '" + req.body.username + "'", function (err, result, fields) {
+      if(err) throw err
+      console.log("1 record updated");
+    })
+    warningMessage = "Your account is locked please try again later!"
+    res.redirect('/signin')
+    setTimeout(() => {
+      warningMessage = ""
+    }, 2000)
+  }
+  else if (decrypted.toString(CryptoJS.enc.Utf8) === password){
+    let user = {username: username, password: password};
+    req.session.user = user;          
+    con.query("UPDATE accounts SET attempts = 0 WHERE userName = '" + username + "'", function (err, result, fields) {
+      if(err) throw err
+      console.log("1 record updated");
+    })
+    con.query("SELECT * FROM country WHERE userName = '" + username + "'", function (err, result, fields) {
+      country = result[0].country;
+    })
+    res.redirect('/surveypage6')
+  }
+  else {
+    con.query("UPDATE accounts SET attempts = " + (result[0].attempts + 1) + " WHERE userName = '" + req.body.username + "'", function (err, result, fields) {
+      if(err) throw err
+      console.log("1 record updated");
+    })
+    warningMessage = "Password not found you have " + (2 - result[0].attempts).toString() + " attempt(s) remaining!"
+    res.redirect('/signin')
+    setTimeout(() => {
+      warningMessage = ""
+    }, 2000)
+  }
+}
+
 app.post('/signin', (req, res) => {
   var con = mysql.createConnection({
     host: host,
@@ -269,11 +307,7 @@ app.post('/signin', (req, res) => {
             con.query("UPDATE accounts SET attempts = 0, bannedTime = '' WHERE userName = '" + req.body.username + "'", function (err, result, fields) {
               if(err) throw err
               console.log("1 record updated");
-              warningMessage = "Your account has been unlocked please enter your username and password!"
-              res.redirect('/signin')
-              setTimeout(() => {
-                warningMessage = ""
-              }, 2000)
+              passwordCheck(result, req.body.username, req.body.password)
             })
           } else {
             warningMessage = "Your account is locked please try again later!"
@@ -284,41 +318,7 @@ app.post('/signin', (req, res) => {
           }
         }
         else {
-          const decrypted = CryptoJS.AES.decrypt(result[0].password, key)
-          if (result[0].attempts >= 2){
-            con.query("UPDATE accounts SET bannedTime = '" + new Date().getTime() + "' WHERE userName = '" + req.body.username + "'", function (err, result, fields) {
-              if(err) throw err
-              console.log("1 record updated");
-            })
-            warningMessage = "Your account is locked please try again later!"
-            res.redirect('/signin')
-            setTimeout(() => {
-              warningMessage = ""
-            }, 2000)
-          }
-          else if (decrypted.toString(CryptoJS.enc.Utf8) === req.body.password){
-            let user = {username: req.body.username, password: req.body.password};
-            req.session.user = user;          
-            con.query("UPDATE accounts SET attempts = 0 WHERE userName = '" + req.body.username + "'", function (err, result, fields) {
-              if(err) throw err
-              console.log("1 record updated");
-            })
-            con.query("SELECT * FROM country WHERE userName = '" + req.body.username + "'", function (err, result, fields) {
-              country = result[0].country;
-            })
-            res.redirect('/surveypage6')
-          }
-          else {
-            con.query("UPDATE accounts SET attempts = " + (result[0].attempts + 1) + " WHERE userName = '" + req.body.username + "'", function (err, result, fields) {
-              if(err) throw err
-              console.log("1 record updated");
-            })
-            warningMessage = "Password not found you have " + (2 - result[0].attempts).toString() + " attempt(s) remaining!"
-            res.redirect('/signin')
-            setTimeout(() => {
-              warningMessage = ""
-            }, 2000)
-          }
+          passwordCheck(result, req.body.username, req.body.password)
         }
       }
       else {
