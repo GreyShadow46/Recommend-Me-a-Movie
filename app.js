@@ -215,7 +215,7 @@ app.post('/signup', (req, res) => {
         }, 2000)
       }
       else {
-        con.query("INSERT INTO accounts (userName, emailAddress, password, attempts) VALUES ('" + req.body.username + "', '" + req.body.email + "', '" + CryptoJS.AES.encrypt(req.body.password, key) + "',0" +")", function (err, result) {
+        con.query("INSERT INTO accounts (userName, emailAddress, password, attempts, bannedTime) VALUES ('" + req.body.username + "', '" + req.body.email + "', '" + CryptoJS.AES.encrypt(req.body.password, key) + "',0, '')", function (err, result) {
           if (err) throw err;
           console.log("1 record inserted");
         });
@@ -310,6 +310,8 @@ app.post('/signin', (req, res) => {
             con.query("UPDATE accounts SET attempts = 0, bannedTime = '' WHERE userName = '" + req.body.username + "'", function (err, result, fields) {
               if(err) throw err
               console.log("1 record updated");
+            })
+            con.query("SELECT * FROM accounts WHERE userName = '" + req.body.username + "'", function (err, account, fields) {
               passwordCheck(account, req, res, con)
             })
           } else {
