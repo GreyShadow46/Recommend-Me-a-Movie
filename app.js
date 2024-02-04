@@ -307,6 +307,7 @@ app.post('/signin', (req, res) => {
       if(account.length !== 0){
         if(account[0].bannedTime !== 0){
           console.log(account[0].bannedTime + (24 * 60 * 60 * 1000))
+          console.log(new Date().getTime())
           if(account[0].bannedTime + (24 * 60 * 60 * 1000) <= new Date().getTime()){
             con.query("UPDATE accounts SET attempts = 0, bannedTime = 0 WHERE userName = '" + req.body.username + "'", function (err, result, fields) {
               if(err) throw err
