@@ -890,7 +890,7 @@ app.post('/addmovie', function (req, res) {
   })
 })
 
-app.get('/sqlprocessor', function (req, res) {
+app.get('/sqlprocessor', checkAdminSignIn, function (req, res) {
   currentPage = '/sqlprocessor'
   fs.readFile('sqlprocessor.html', function(err, data) {
     if (err) throw err;
