@@ -215,7 +215,7 @@ app.post('/signup', (req, res) => {
         }, 2000)
       }
       else {
-        con.query("INSERT INTO accounts (userName, emailAddress, password, attempts, bannedTime) VALUES ('" + req.body.username + "', '" + req.body.email + "', '" + CryptoJS.AES.encrypt(req.body.password, key) + "',0, '')", function (err, result) {
+        con.query("INSERT INTO accounts (userName, emailAddress, password, attempts, bannedTime) VALUES ('" + req.body.username + "', '" + req.body.email + "', '" + CryptoJS.AES.encrypt(req.body.password, key) + "',0, 0)", function (err, result) {
           if (err) throw err;
           console.log("1 record inserted");
         });
@@ -253,7 +253,7 @@ app.get('/signin', function (req, res) {
 const passwordCheck = (account, req, res, con) => {
   const decrypted = CryptoJS.AES.decrypt(account[0].password, key)
   if (account[0].attempts > 3){
-    con.query("UPDATE accounts SET bannedTime = '" + new Date().getTime() + "' WHERE userName = '" + req.body.username + "'", function (err, result, fields) {
+    con.query("UPDATE accounts SET bannedTime = " + new Date().getTime() + " WHERE userName = '" + req.body.username + "'", function (err, result, fields) {
       if(err) throw err
       console.log("1 record updated");
     })
@@ -305,8 +305,8 @@ app.post('/signin', (req, res) => {
     console.log("Connected!");
     con.query("SELECT * FROM accounts WHERE userName = '" + req.body.username + "'", function (err, account, fields) {
       if(account.length !== 0){
-        if(account[0].bannedTime !== ''){
-          if(parseInt(account[0].bannedTime) + 24 * 60 * 60 * 1000 <= new Date().getTime()){
+        if(account[0].bannedTime !== 0){
+          if(account[0].bannedTime + 24 * 60 * 60 * 1000 <= new Date().getTime()){
             con.query("UPDATE accounts SET attempts = 0, bannedTime = '' WHERE userName = '" + req.body.username + "'", function (err, result, fields) {
               if(err) throw err
               console.log("1 record updated");
@@ -406,7 +406,7 @@ app.post('/resetyourpassword', (req, res) => {
   con.connect(function(err) {
     if (err) throw err;
     console.log("Connected!");
-    con.query("UPDATE accounts SET password = '" + CryptoJS.AES.encrypt(req.body.password, key) + "', attempts = 0, bannedTime = '' WHERE userName = '" + username + "'", function (err, result, fields) {
+    con.query("UPDATE accounts SET password = '" + CryptoJS.AES.encrypt(req.body.password, key) + "', attempts = 0, bannedTime = 0 WHERE userName = '" + username + "'", function (err, result, fields) {
       if(err) throw err
       console.log("1 record updated");
     })
