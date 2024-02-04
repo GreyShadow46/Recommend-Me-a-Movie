@@ -306,6 +306,7 @@ app.post('/signin', (req, res) => {
     con.query("SELECT * FROM accounts WHERE userName = '" + req.body.username + "'", function (err, account, fields) {
       if(account.length !== 0){
         if(account[0].bannedTime !== ''){
+          console.log(account[0].bannedTime)
           console.log(new Date(account[0].bannedTime + (1 * 24 * 60 * 60 * 1000)).getTime())
           console.log(new Date().getTime())
           if(new Date(account[0].bannedTime + (1 * 24 * 60 * 60 * 1000)).getTime() <= new Date().getTime()){
