@@ -177,9 +177,7 @@ app.get('/', function (req, res) {
   });
 });
 
-app.get('/unitedkingdom', function (req, res) {
-  const previousPage = req.get('Referrer') || '/';
-  
+app.get('/unitedkingdom', function (req, res) {  
   if(req.session.user && req.session.user.username) {
     const username = req.session.user.username;
     
@@ -206,7 +204,6 @@ app.get('/unitedkingdom', function (req, res) {
   }
   
   req.session.country = "United Kingdom";
-  res.redirect(previousPage);
 });
 
 app.get('/unitedstates', function (req, res) {
