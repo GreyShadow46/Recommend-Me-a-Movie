@@ -1,9 +1,6 @@
 # Environment
 .env
 
-#unused files
-addmovie.html
-
 # Docker
 *.log
 logs/
