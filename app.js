@@ -1,7 +1,7 @@
 const express = require('express');
 const fs = require('fs');
 const app = express();
-const mysql = require('mysql2'); // Changed from 'mysql' to 'mysql2'
+const mysql = require('mysql2');
 const CryptoJS = require("crypto-js");
 const nodemailer = require('nodemailer');
 const session = require('express-session');
@@ -60,14 +60,12 @@ app.use(session({
   name: 'sessionId'
 }));
 
-app.listen(8080, () => {
-  console.log('Server running on http://localhost:8080');
+app.listen(8080, "0.0.0.0", () => {
+  console.log('Server running on http://0.0.0.0:8080');
 });
 
-let country = "United Kingdom";
-
 const host = process.env.DB_HOST || "";
-const port = parseInt(process.env.DB_PORT) || "";
+const port = parseInt(process.env.DB_PORT) || 0;
 const mySQLUser = process.env.DB_USER || "";
 const mysSQLPassword = process.env.DB_PASSWORD || "";
 const database = process.env.DB_NAME || "";
@@ -165,7 +163,6 @@ function tempSignIn(req, res, next){
 }
 
 app.get('/', function (req, res) {
-  currentPage = '/';
   fs.readFile('index.html', function(err, data) {
     if (err) {
       console.error(err);
@@ -177,25 +174,26 @@ app.get('/', function (req, res) {
   });
 });
 
-app.get('/unitedkingdom', function (req, res) {  
+app.get('/unitedkingdom', function (req, res) {
+  const currentPage = req.session.currentPage || '/'
   if(req.session.user && req.session.user.username) {
     const username = req.session.user.username;
     
     pool.query("SELECT * FROM country WHERE userName = ?", [username], function (err, result) {
       if (err) {
         console.error(err);
-        return res.redirect(previousPage);
+        return res.redirect(currentPage);
       }
       
       if(result.length === 0){
         pool.query("INSERT INTO country (userName, country) VALUES (?, ?)", 
-          [username, "United Kingdom"], function (err) {
+          [username, "uk"], function (err) {
             if (err) console.error(err);
             console.log("1 record inserted");
           });
       } else {
         pool.query("UPDATE country SET country = ? WHERE userName = ?", 
-          ["United Kingdom", username], function (err) {
+          ["uk", username], function (err) {
             if (err) console.error(err);
             console.log("1 record updated");
           });
@@ -203,30 +201,30 @@ app.get('/unitedkingdom', function (req, res) {
     });
   }
   
-  req.session.country = "United Kingdom";
+  req.session.country = "uk";
+  res.redirect(currentPage);
 });
 
-app.get('/unitedstates', function (req, res) {
-  const previousPage = req.get('Referrer') || '/';
-  
+app.get('/unitedstates', function (req, res) {  
+  const currentPage = req.session.currentPage || ''
   if(req.session.user && req.session.user.username) {
     const username = req.session.user.username;
     
     pool.query("SELECT * FROM country WHERE userName = ?", [username], function (err, result) {
       if (err) {
         console.error(err);
-        return res.redirect(previousPage);
+        return res.redirect(currentPage);
       }
       
       if(result.length === 0){
         pool.query("INSERT INTO country (userName, country) VALUES (?, ?)", 
-          [username, "United States"], function (err) {
+          [username, "us"], function (err) {
             if (err) console.error(err);
             console.log("1 record inserted");
           });
       } else {
         pool.query("UPDATE country SET country = ? WHERE userName = ?", 
-          ["United States", username], function (err) {
+          ["us", username], function (err) {
             if (err) console.error(err);
             console.log("1 record updated");
           });
@@ -234,11 +232,12 @@ app.get('/unitedstates', function (req, res) {
     });
   }
   
-  req.session.country = "United States";
-  res.redirect(previousPage);
+  req.session.country = "us";
+  res.redirect(currentPage);
 });
 
 app.get('/signup', function (req, res) {
+  req.session.currentPage = '/signup';
   const warning = req.session.warningMessage || '';
   delete req.session.warningMessage;
   
@@ -254,7 +253,7 @@ app.post('/signup', (req, res) => {
   const username = sanitizeInput(req.body.username);
   const email = sanitizeInput(req.body.email);
   const password = req.body.password;
-  const userCountry = req.session.country || "United Kingdom";
+  const userCountry = req.session.country || "uk";
   
   // Validate inputs
   if (!validateUsername(username)) {
@@ -300,9 +299,13 @@ app.post('/signup', (req, res) => {
               if (err) console.error(err);
               console.log("1 record inserted");
             });
-          
+
+          const protocol = req.headers['x-forwarded-proto'] || req.protocol;
+          const host = req.headers['x-forwarded-host'] || req.get('host');
+          const baseUrl = `${protocol}://${host}`;
+
           sendMail(username, email, "Verify your Email", 
-            'Please press this <a href="http://127.0.0.1:8080/surveypage1">button</a> to verify your account');
+            `Please press this <a href="${baseUrl}/${userCountry}/surveypage1">button</a> to verify your account`);
           
           // Save session before redirect
           req.session.user = {username: username};
@@ -316,6 +319,7 @@ app.post('/signup', (req, res) => {
 });
 
 app.get('/signin', function (req, res) {
+  req.session.currentPage = '/signin';
   const warning = req.session.warningMessage || '';
   delete req.session.warningMessage;
   
@@ -352,7 +356,7 @@ const passwordCheck = (account, req, res) => {
         if (!err && countryResult.length > 0) {
           req.session.country = countryResult[0].country;
         } else {
-          req.session.country = "United Kingdom";
+          req.session.country = "uk";
         }
         
         // Set user session and save before redirect
@@ -430,6 +434,7 @@ app.post('/signin', authLimiter, (req, res) => {
 });
 
 app.get('/forgotyourpassword', function (req, res) {
+  req.session.currentPage = '/forgotyourpassword';
   const warning = req.session.warningMessage || '';
   delete req.session.warningMessage;
   
@@ -444,6 +449,7 @@ app.get('/forgotyourpassword', function (req, res) {
 app.post('/forgotyourpassword', authLimiter, (req, res) => {
   const username = sanitizeInput(req.body.username);
   const email = sanitizeInput(req.body.email);
+  const userCountry = req.session.country || 'uk';
   
   if (!validateUsername(username) || !validateEmail(email)) {
     req.session.warningMessage = "Invalid input";
@@ -462,11 +468,13 @@ app.post('/forgotyourpassword', authLimiter, (req, res) => {
         req.session.tempUsername = username;
         req.session.save((err) => {
           if (err) console.error(err);
-          
+          const protocol = req.headers['x-forwarded-proto'] || req.protocol;
+          const host = req.headers['x-forwarded-host'] || req.get('host');
+          const baseUrl = `${protocol}://${host}`;
+
           // Send password reset email with proper HTML link
-          const resetLink = 'http://127.0.0.1:8080/resetyourpassword';
           sendMail(username, email, "Reset Your Password", 
-            `Please click this <a href="${resetLink}" style="color: #007bff; text-decoration: none; font-weight: bold;">button</a> to reset your password.`);
+            `Please click this <a href="${baseUrl}/resetyourpassword" style="color: #007bff; text-decoration: none; font-weight: bold;">button</a> to reset your password.`);
           res.redirect('/verifyemail');
         });
       } else {
@@ -477,6 +485,7 @@ app.post('/forgotyourpassword', authLimiter, (req, res) => {
 });
 
 app.get('/resetyourpassword', tempSignIn, function (req, res) {
+  req.session.currentPage = '/resetyourpassword'
   fs.readFile('resetyourpassword.html', function(err, data) {
     if (err) {
       console.error(err);
@@ -508,6 +517,7 @@ app.post('/resetyourpassword', (req, res) => {
 });
 
 app.get('/verifyemail', function (req, res) {
+  req.session.currentPage = '/verifyemail';
   fs.readFile('verifyemail.html', function(err, data) {
     if (err) {
       console.error(err);
@@ -520,6 +530,7 @@ app.get('/verifyemail', function (req, res) {
 });
 
 app.get('/customerfeedback', function (req, res) {
+  req.session.currentPage = '/customerfeedback';
   const success = req.session.successMessage || '';
   delete req.session.successMessage;
   
@@ -546,20 +557,14 @@ app.post('/customerfeedback', (req, res) => {
   res.redirect('/customerfeedback');
 });
 
-// Due to length constraints, I'll continue with the most critical routes
-// The pattern for the remaining routes is the same:
-// 1. Use parameterized queries (?) instead of string concatenation
-// 2. Validate and sanitize all inputs
-// 3. Use req.session.user.username instead of global username variable
-// 4. Use pool instead of creating new connections
-// 5. Add proper error handling
-
-app.get('/surveypage1', checkSignIn, function (req, res) {  
+app.get('/surveypage1', checkSignIn, function (req, res) {
+    req.session.currentPage = '/surveypage1';
     let data = ''
-    if(country === "United Kingdom") {
+    const userCountry = req.session.country || "uk";
+    if(userCountry === "uk") {
       data = '<!DOCTYPE html><html><head><meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="stylesheet" href="/styles.css" /><script src="/index.js"></script></head><body><div class="topBar"><div class="headerClass"><h1 class="titleText">Recommend Me a Movie</h1></div><div class="signUp"><p id="showUsername" class="signUpText"></p></div></div><div class="overview"><h2>Which Streaming Services do you own?</h2><p>Pick as many as you like</p><div><form action="/surveypage1" method="post"><div class="border"><div class="labelClass"><label for="netflix">Netflix</label></div><div class="checkboxClass"><input type="checkbox" id="netflix" name="netflix" /></div></div><br /><div class="border"><div class="labelClass"><label for="disneyplus">Disney +</label></div><div class="checkboxClass"><input type="checkbox" id="disneyplus" name="disneyplus" /></div></div><br /><div class="border"><div class="labelClass"><label for="amazonprime">Amazon Prime</label></div><div class="checkboxClass"><input type="checkbox" id="amazonprime" name="amazonprime" /></div></div><br /><div class="border"><div class="labelClass"><label for="nowtv">Now TV</label></div><div class="checkboxClass"><input type="checkbox" id="nowtv" name="nowtv" /></div></div><br /><div class="border"><div class="labelClass"><label for="appletv+">Apple TV +</label></div><div class="checkboxClass"><input type="checkbox" id="appletvplus" name="appletvplus" /></div></div><br /><div class="border"></div></div><br /><input id="submitButton" name="submitButton" type="submit" value="Continue"/></form><br /><br /><br /><br /><br /><br /><br /><br /><br /></div></div><div class="topBar"><br /><br /><div><a class="countryText" href="/unitedkingdom">United Kingdom</a><a class="countryText" href="/unitedstates">United States</a></div></div></body></html>'
     }
-    else if(country === "United States"){
+    else {
       data = '<!DOCTYPE html><html><head><meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="stylesheet" href="/styles.css" /><script src="/index.js"></script></head><body><div class="topBar"><div class="headerClass"><h1 class="titleText>Recommend Me a Movie</h1></div><div class="signUp"><p id="showUsername" class="signUpText"></p></div></div><div class="overview"><h2>Which Streaming Services do you own?</h2><p>Pick as many as you like</p><div><form action="/surveypage1" method="post"><div class="border"><div class="labelClass"><label for="netflix">Netflix</label></div><div class="checkboxClass"><input type="checkbox" id="netflix" name="netflix" /></div></div><br /><div class="border"><div class="labelClass"><label for="disneyplus">Disney +</label></div><div class="checkboxClass"><input type="checkbox" id="disneyplus" name="disneyplus" /></div></div><br /><div class="border"><div class="labelClass"><label for="amazonprime">Amazon Prime</label></div><div class="checkboxClass"><input type="checkbox" id="amazonprime" name="amazonprime" /></div></div><br /><div class="border"><div class="labelClass"><label for="appletv+">Apple TV +</label></div><div class="checkboxClass"><input type="checkbox" id="appletvplus" name="appletvplus" /></div></div><br /><div class="border"><div class="labelClass"><label for="peacock">Peacock</label></div><div class="checkboxClass"><input type="checkbox" id="peacock" name="peacock" /></div></div><br /><div class="border"><div class="labelClass"><label for="hulu">Hulu</label></div><div class="checkboxClass"><input type="checkbox" id="hulu" name="hulu" /></div></div><br /><div class="border"><div class="labelClass"><label for="max">Max</label></div><div class="checkboxClass"><input type="checkbox" id="max" name="max" /></div></div><br /><input id="submitButton" name="submitButton" type="submit" value="Continue"/></form><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /></div></div><div class="topBar"><br /><br /><div><a class="countryText" href="/unitedkingdom">United Kingdom</a><a class="countryText" href="/unitedstates">United States</a></div></div></body></html>'
     }
     res.writeHead(200, {'Content-Type': 'text/html'});
@@ -569,7 +574,6 @@ app.get('/surveypage1', checkSignIn, function (req, res) {
 
 app.post('/surveypage1', checkSignIn, function (req, res) {
   const username = req.session.user.username;
-  
   pool.query("SELECT * FROM streamingServices WHERE userName = ?", [username], function (err, result) {
     if (err) {
       console.error(err);
@@ -597,6 +601,7 @@ app.post('/surveypage1', checkSignIn, function (req, res) {
 });
 
 app.get('/surveypage2', checkSignIn, function (req, res) {
+  req.session.currentPage = '/surveypage2';
   fs.readFile('surveypage2.html', function(err, data) {
     if (err) throw err;
     res.writeHead(200, {'Content-Type': 'text/html'});
@@ -635,6 +640,7 @@ app.post('/surveypage2', checkSignIn, function (req, res) {
 });
 
 app.get('/surveypage3', checkSignIn, function (req, res) {
+  req.session.currentPage = '/surveypage3';
   const username = req.session.user.username;
   
   pool.query("SELECT * FROM favouriteGenres WHERE userName = ?", [username], function (err, result) {
@@ -691,6 +697,7 @@ app.post('/surveypage3', checkSignIn, function (req, res) {
 });
 
 app.get('/surveypage4', checkSignIn, function (req, res) {
+  req.session.currentPage = '/surveypage4';
   fs.readFile('surveypage4.html', function(err, data) {
     if (err) {
       console.error(err);
@@ -731,6 +738,7 @@ app.post('/surveypage4', checkSignIn, function (req, res) {
 });
 
 app.get('/surveypage5', checkSignIn, function (req, res) {
+  req.session.currentPage = '/surveypage5';
   fs.readFile('surveypage5.html', function(err, data) {
     if (err) {
       console.error(err);
@@ -771,6 +779,7 @@ app.post('/surveypage5', checkSignIn, function (req, res) {
 });
 
 app.get('/surveypage6', checkSignIn, function (req, res) {
+  req.session.currentPage = '/surveypage6'
   fs.readFile('surveypage6.html', function(err, data) {
     if (err) {
       console.error(err);
@@ -782,9 +791,8 @@ app.get('/surveypage6', checkSignIn, function (req, res) {
   });
 });
 
-app.get('/recommendation', checkSignIn, function (req, res) {
-  const username = req.session.user.username;
-  
+app.get('/recommendation', checkSignIn, function (req, res) { 
+  req.session.currentPage = '/recommendation'; 
   // Get current movie from session
   if (!req.session.currentMovie || !req.session.currentMovie.name) {
     return res.redirect('/surveypage6');
@@ -802,7 +810,7 @@ app.get('/recommendation', checkSignIn, function (req, res) {
 app.post('/recommendation', checkSignIn, function (req, res) {
   const username = req.session.user.username;
   const preference = sanitizeInput(req.body.preference);
-  const userCountry = req.session.country || "United Kingdom";
+  const userCountry = req.session.country || "uk";
   
   // Validate preference
   if (!['Movie', 'TVShow', 'Both'].includes(preference)) {

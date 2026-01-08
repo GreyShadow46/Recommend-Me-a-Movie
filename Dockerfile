@@ -1,17 +1,22 @@
-# Start your image with a node base image
+# Use Node.js 22 Alpine (lightweight)
 FROM node:22-alpine
 
-# The /app directory should act as the main application directory
+# Set working directory
 WORKDIR /app
 
-# Copy the app package and package-lock.json file
+# Copy package files
 COPY package*.json ./
 
-# Copy local directories to the current local directory of our docker image (/app)
-COPY ./public ./public
-COPY ./nginx ./nginx
+# Install dependencies
+RUN npm install --production
 
-EXPOSE 3000
+# Copy application files
+COPY . .
 
-# Start the app using serve command
-CMD [ "node", "app.js" ]
+# Create public directory if it doesn't exist
+RUN mkdir -p public
+
+EXPOSE 8080
+
+# Start the application
+CMD ["node", "app.js"]
