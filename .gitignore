@@ -1,3 +1,19 @@
+# Environment
 .env
+
+#unused files
 addmovie.html
-.dockeringnore
+
+# Docker
+*.log
+logs/
+mysql_data/
+nginx_logs/
+
+# Node
+node_modules/
+
+# OS / editor junk
+.DS_Store
+Thumbs.db
+.vscode/
