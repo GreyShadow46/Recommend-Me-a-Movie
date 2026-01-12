@@ -1,3 +1,10 @@
-README.md
-addmovie.html
+node_modules/
+npm-debug.log
+.git
+.gitignore
+.DS_Store
+*.md
+certbot/
+logs/
+*.log
 .env

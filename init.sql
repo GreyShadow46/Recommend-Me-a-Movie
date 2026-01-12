@@ -3,8 +3,8 @@
 -- ============================================
 
 -- Create the database
-CREATE DATABASE IF NOT EXISTS mydb CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-USE mydb;
+CREATE DATABASE IF NOT EXISTS recommend_me_a_movie CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+USE recommend_me_a_movie;
 
 -- ============================================
 -- Table: accounts
@@ -293,103 +293,240 @@ INSERT INTO `moviesAndTvShows` (`id`,`name`,`poster`,`synopsis`,`availableOn`,`i
 INSERT INTO `moviesAndTvShows` (`id`,`name`,`poster`,`synopsis`,`availableOn`,`imdb`,`ageRating`,`genres`,`length`,`yearReleased`,`trailer`,`type`,`country`,`netflix`,`disneyPlus`,`amazonPrime`,`nowTv`,`appleTvPlus`,`peacock`,`hulu`,`max`,`action`,`comedy`,`drama`,`adventure`,`thriller`,`crime`,`romance`,`scienceFiction`,`fantasy`,`family`,`mystery`,`biography`,`history`,`animation`,`music`,`sport`,`superhero`,`western`,`war`,`horror`,`createdAt`,`updatedAt`) VALUES (72,'Iron Man','https://image.tmdb.org/t/p/w500/78lPtwv72eTNqFW9COBYI0dWDJa.jpg','A billionaire builds a high-tech suit to fight evil.','Disney+',7.9,12,'Action, Adventure, Superhero','126m',2008,'https://www.youtube.com/watch?v=8hYlB38asDY','Movie','us','','on','','','','','','','on','','','on','','','','','','','','','','','','','on','','','','2026-01-02 14:47:05','2026-01-02 14:47:05');
 INSERT INTO `moviesAndTvShows` (`id`,`name`,`poster`,`synopsis`,`availableOn`,`imdb`,`ageRating`,`genres`,`length`,`yearReleased`,`trailer`,`type`,`country`,`netflix`,`disneyPlus`,`amazonPrime`,`nowTv`,`appleTvPlus`,`peacock`,`hulu`,`max`,`action`,`comedy`,`drama`,`adventure`,`thriller`,`crime`,`romance`,`scienceFiction`,`fantasy`,`family`,`mystery`,`biography`,`history`,`animation`,`music`,`sport`,`superhero`,`western`,`war`,`horror`,`createdAt`,`updatedAt`) VALUES (73,'The Boys','https://image.tmdb.org/t/p/w500/mY7SeH4HFFxW1hiI6cWuwCRKptN.jpg','A group of vigilantes aim to take down corrupt superheroes.','Prime Video',8.7,18,'Action, Comedy, Superhero','60m',2019,'https://www.youtube.com/watch?v=06z1ZC6FYyA','TV Show','us','','','on','','','','','','on','on','','','','','','','','','','','','','','','on','','','','2026-01-02 14:47:05','2026-01-02 14:47:05');
 INSERT INTO `moviesAndTvShows` (`id`,`name`,`poster`,`synopsis`,`availableOn`,`imdb`,`ageRating`,`genres`,`length`,`yearReleased`,`trailer`,`type`,`country`,`netflix`,`disneyPlus`,`amazonPrime`,`nowTv`,`appleTvPlus`,`peacock`,`hulu`,`max`,`action`,`comedy`,`drama`,`adventure`,`thriller`,`crime`,`romance`,`scienceFiction`,`fantasy`,`family`,`mystery`,`biography`,`history`,`animation`,`music`,`sport`,`superhero`,`western`,`war`,`horror`,`createdAt`,`updatedAt`) VALUES (74,'The Boys','https://image.tmdb.org/t/p/w500/mY7SeH4HFFxW1hiI6cWuwCRKptN.jpg','A group of vigilantes aim to take down corrupt superheroes.','Prime Video',8.7,18,'Action, Comedy, Superhero','60m',2019,'https://www.youtube.com/watch?v=06z1ZC6FYyA','TV Show','uk','','','on','','','','','','on','on','','','','','','','','','','','','','','','on','','','','2026-01-02 14:47:05','2026-01-02 14:47:05');
-INSERT INTO `moviesAndTvShows` VALUES
-(75,'Aftersun',
-'https://image.tmdb.org/t/p/w500/evKz85EKouVbIr51zy5fOtpNRPg.jpg',
-'A father and daughter spend a bittersweet holiday together, reflecting on memory and growing up.',
-'Netflix',7.7,12,'Drama','101m',2022,
-'https://www.youtube.com/watch?v=GmQK4sFsm1Y',
-'Movie','uk',
-'on','','','','','','','','',
-'','','on','','','','','','','','','','','','','','','','','','',
-'2026-01-06 10:00:00','2026-01-06 10:00:00');
-INSERT INTO `moviesAndTvShows` VALUES
-(76,'Boiling Point',
+INSERT INTO `moviesAndTvShows` (`id`,`name`,`poster`,`synopsis`,`availableOn`,`imdb`,`ageRating`,`genres`,`length`,`yearReleased`,`trailer`,`type`,`country`,`netflix`,`disneyPlus`,`amazonPrime`,`nowTv`,`appleTvPlus`,`peacock`,`hulu`,`max`,`action`,`comedy`,`drama`,`adventure`,`thriller`,`crime`,`romance`,`scienceFiction`,`fantasy`,`family`,`mystery`,`biography`,`history`,`animation`,`music`,`sport`,`superhero`,`western`,`war`,`horror`,`createdAt`,`updatedAt`) VALUES(75,'Aftersun','https://image.tmdb.org/t/p/w500/evKz85EKouVbIr51zy5fOtpNRPg.jpg','A father and daughter spend a bittersweet holiday together, reflecting on memory and growing up.','Netflix',7.7,12,'Drama','101m',2022,'https://www.youtube.com/watch?v=GmQK4sFsm1Y','Movie','uk','on','','','','','','','','','','','on','','','','','','','','','','','','','','','','','2026-01-06 10:00:00','2026-01-06 10:00:00');
+INSERT INTO moviesAndTvShows
+(id, name, poster, synopsis, availableOn, imdb, ageRating, genres, length, yearReleased, trailer, type, country, amazonPrime, drama, thriller, createdAt, updatedAt)
+VALUES
+(76,
+'Boiling Point',
 'https://image.tmdb.org/t/p/w500/6i4n7P5G2J0xZmb7tMZ0pQfM9xF.jpg',
 'A chef navigates a chaotic night in a high-pressure restaurant.',
-'Prime Video',7.5,15,'Drama, Thriller','92m',2021,
+'Prime Video',
+7.5,
+15,
+'Drama, Thriller',
+'92m',
+2021,
 'https://www.youtube.com/watch?v=UBUfCL_tvro',
-'Movie','uk',
-'','','on','','','','','','',
-'','','on','','','on','','','','','','','','','','','','','','',
-'2026-01-06 10:00:00','2026-01-06 10:00:00');
-INSERT INTO `moviesAndTvShows` VALUES
-(76,'Boiling Point',
-'https://image.tmdb.org/t/p/w500/6i4n7P5G2J0xZmb7tMZ0pQfM9xF.jpg',
-'A chef navigates a chaotic night in a high-pressure restaurant.',
-'Prime Video',7.5,15,'Drama, Thriller','92m',2021,
-'https://www.youtube.com/watch?v=UBUfCL_tvro',
-'Movie','uk',
-'','','on','','','','','','',
-'','','on','','','on','','','','','','','','','','','','','','',
-'2026-01-06 10:00:00','2026-01-06 10:00:00');
-INSERT INTO `moviesAndTvShows` VALUES
-(78,'Palm Springs',
+'Movie',
+'uk',
+'on',
+'on',
+'on',
+'2026-01-06 10:00:00',
+'2026-01-06 10:00:00');
+INSERT INTO moviesAndTvShows
+(id, name, poster, synopsis, availableOn, imdb, ageRating, genres, length, yearReleased, trailer, type, country, hulu, comedy, romance, scienceFiction, createdAt, updatedAt)
+VALUES
+(78,
+'Palm Springs',
 'https://image.tmdb.org/t/p/w500/yf5IuMW6GHghu39kxA0oFx7Bxmj.jpg',
 'Two wedding guests find themselves stuck reliving the same day.',
-'Hulu',7.4,15,'Comedy, Romance, Science Fiction','90m',2020,
+'Hulu',
+7.4,
+15,
+'Comedy, Romance, Science Fiction',
+'90m',
+2020,
 'https://www.youtube.com/watch?v=CpBLtXduh_k',
-'Movie','us',
-'','','','','','','on','','',
-'','','','on','','','','','on','','','','','','','','','','','',
-'2026-01-06 10:00:00','2026-01-06 10:00:00');
-INSERT INTO `moviesAndTvShows` VALUES
-(79,'CODA',
+'Movie',
+'us',
+'on',
+'on',
+'on',
+'on',
+'2026-01-06 10:00:00',
+'2026-01-06 10:00:00');
+INSERT INTO moviesAndTvShows
+(id, name, poster, synopsis, availableOn, imdb, ageRating, genres, length, yearReleased, trailer, type, country, appleTvPlus, drama, music, createdAt, updatedAt)
+VALUES
+(79,
+'CODA',
 'https://image.tmdb.org/t/p/w500/BzVjmm8l23rPsijLiNLUzuQtyd.jpg',
 'A hearing child of a deaf family discovers her passion for music.',
-'Apple TV+',8.0,12,'Drama, Music','111m',2021,
+'Apple TV+',
+8.0,
+12,
+'Drama, Music',
+'111m',
+2021,
 'https://www.youtube.com/watch?v=0pmfrE1YL4I',
-'Movie','us',
-'','','','','on','','','','',
-'','','on','','','','','','','','','','','','','','','on','','',
-'2026-01-06 10:00:00','2026-01-06 10:00:00');
-INSERT INTO `moviesAndTvShows` VALUES
-(79,'CODA',
-'https://image.tmdb.org/t/p/w500/BzVjmm8l23rPsijLiNLUzuQtyd.jpg',
-'A hearing child of a deaf family discovers her passion for music.',
-'Apple TV+',8.0,12,'Drama, Music','111m',2021,
-'https://www.youtube.com/watch?v=0pmfrE1YL4I',
-'Movie','us',
-'','','','','on','','','','',
-'','','on','','','','','','','','','','','','','','','on','','',
-'2026-01-06 10:00:00','2026-01-06 10:00:00');
-INSERT INTO `moviesAndTvShows` VALUES
-(81,'Dune: Part Two','https://image.tmdb.org/t/p/w500/1pdfLvkbY9ohJlCjQH2CZjjYVvJ.jpg','Paul Atreides unites with the Fremen to wage war against his enemies.','Prime Video',8.6,12,'Action, Adventure, Science Fiction','166m',2024,'https://www.youtube.com/watch?v=Way9Dexny3w','Movie','uk','','','on','','','','','','','on','','','','on','','','','on','','','','','','','','','','','2026-01-06 11:00:00','2026-01-06 11:00:00'),
-
-(82,'Poor Things','https://image.tmdb.org/t/p/w500/kCGlIMHnOm8JPXq3rXM6c5wMxcT.jpg','A young woman is brought back to life by an unorthodox scientist.','Disney+',8.1,18,'Comedy, Drama, Fantasy','141m',2023,'https://www.youtube.com/watch?v=RlbR5N6veqw','Movie','uk','','on','','','','','','','','','on','on','','','','','','','on','','','','','','','','','2026-01-06 11:00:00','2026-01-06 11:00:00'),
-
-(83,'Saltburn','https://image.tmdb.org/t/p/w500/qjhahNLSZ705B5JP92YMEYPocPz.jpg','An Oxford student becomes entangled with an aristocratic family.','Prime Video',7.0,18,'Drama, Thriller','131m',2023,'https://www.youtube.com/watch?v=lALMdJf6UUE','Movie','uk','','','on','','','','','','','','','on','','','on','','','','','','','','','','','','','','','2026-01-06 11:00:00','2026-01-06 11:00:00'),
-
-(84,'The Bear','https://image.tmdb.org/t/p/w500/sHFlbKS3WLqMnp9t2ghADIJFNUQ.jpg','A chef returns home to run his family sandwich shop.','Disney+',8.6,15,'Drama','30m',2022,'https://www.youtube.com/watch?v=gBmkI4jlaIo','TV Show','uk','','on','','','','','','','','','on','','','','','','','','','','','','','','','','','','','2026-01-06 11:00:00','2026-01-06 11:00:00'),
-
-(85,'Killers of the Flower Moon','https://image.tmdb.org/t/p/w500/dB6Krk806zeqd0YNp2ngQ9zXteH.jpg','A series of murders in 1920s Oklahoma spark a major investigation.','Apple TV+',7.8,18,'Crime, Drama, History','206m',2023,'https://www.youtube.com/watch?v=EP34Yoxs3FQ','Movie','us','','','','','on','','','','','', '', 'on','','','on','','','','','','','','','on','','','','','2026-01-06 11:00:00','2026-01-06 11:00:00'),
-
-(86,'Oppenheimer','https://image.tmdb.org/t/p/w500/8Gxv8gSFCU0XGDykEGv7zR1n2ua.jpg','The story of the creation of the atomic bomb.','Prime Video',8.4,15,'Drama, History, Biography','180m',2023,'https://www.youtube.com/watch?v=uYPbbksJxIg','Movie','us','','','on','','','','','','','','','on','','','','','','','','','','','on','on','','','','','2026-01-06 11:00:00','2026-01-06 11:00:00'),
-
-(87,'Past Lives','https://image.tmdb.org/t/p/w500/k3waqVXSnvCZWfJYNtdamTgTtTA.jpg','Two childhood friends reconnect decades later.','Netflix',7.9,12,'Drama, Romance','105m',2023,'https://www.youtube.com/watch?v=kA244xewjcI','Movie','us','on','','','','','','','','','','','on','','','','','on','','','','','','','','','','','','','2026-01-06 11:00:00','2026-01-06 11:00:00'),
-
-(88,'Shōgun','https://image.tmdb.org/t/p/w500/7O4iVY5pH1L8z2hE4Z9bTRq7XfD.jpg','A power struggle unfolds in feudal Japan.','Disney+',8.9,18,'Drama, History, Adventure','60m',2024,'https://www.youtube.com/watch?v=yAN5uspO_hk','TV Show','us','','on','','','','','','','','','on','','','on','','','','','','','','','on','','','','','2026-01-06 11:00:00','2026-01-06 11:00:00'),
-
-(89,'The Night Agent','https://image.tmdb.org/t/p/w500/rKUyH2jRz9fNPk1OpoZR93ZVZ7v.jpg','An FBI agent is pulled into a deadly conspiracy.','Netflix',7.5,15,'Action, Thriller','50m',2023,'https://www.youtube.com/watch?v=YDbnY9Obsfs','TV Show','us','on','','','','','','','','','on','','','','','on','','','','','','','','','','','','','','','2026-01-06 11:00:00','2026-01-06 11:00:00'),
-
-(90,'Fallout','https://image.tmdb.org/t/p/w500/dmW6T9eS6yYvZ2y9E9xZk5Zf6bS.jpg','Survivors navigate a radioactive wasteland.','Prime Video',8.7,18,'Science Fiction, Action','60m',2024,'https://www.youtube.com/watch?v=0kQ8i2FpRDk','TV Show','us','','','on','','','','','','','on','','','','','','','','','on','','','','','','','','','','','2026-01-06 11:00:00','2026-01-06 11:00:00');
-INSERT INTO `moviesAndTvShows` VALUES
-(91,'Masters of the Air','https://image.tmdb.org/t/p/w500/7h5HdtF5r2J7Fz0Jz5Z5T0Fqk8X.jpg','US bomber crews fight their way through WWII Europe.','Apple TV+',8.2,15,'Drama, War, History','60m',2024,'https://www.youtube.com/watch?v=lA-1JCRguZ0','TV Show','us','','','','','on','','','','','','','on','','','','','','','','','','','on','','','','','2026-01-06 11:10:00','2026-01-06 11:10:00'),
-
-(92,'The Gentlemen','https://image.tmdb.org/t/p/w500/6EJrZ8hV5E4LQv4xv1Yk6mZ3kPj.jpg','An aristocrat gets caught in London’s criminal underworld.','Netflix',8.1,18,'Crime, Comedy','60m',2019,'https://www.youtube.com/watch?v=Ify9S7hj480','TV Show','uk','on','','','','','','','','','','','on','','','on','','','','','','','','','','','','','2026-01-06 11:10:00','2026-01-06 11:10:00'),
-
-(93,'Black Mirror','https://image.tmdb.org/t/p/w500/7PRddO7z7mcPi21nZTCMGShAyy1.jpg','Dark and satirical stories about technology.','Netflix',8.7,18,'Drama, Science Fiction','60m',2011,'https://www.youtube.com/watch?v=jDiYGjp5iFg','TV Show','uk','on','','','','','','','','','','','on','','','','','','','on','','','','','','','','','2026-01-06 11:10:00','2026-01-06 11:10:00'),
-
-(94,'True Detective: Night Country','https://image.tmdb.org/t/p/w500/7pP6RZ7VZlqZkFqK1h5u3FJrjQf.jpg','Detectives investigate a frozen mystery in Alaska.','Max',8.0,18,'Crime, Mystery, Drama','60m',2024,'https://www.youtube.com/watch?v=YF0nD7K7bTI','TV Show','us','','','','','','','','','on','','','','','on','','','','','','','','','','','','','2026-01-06 11:10:00','2026-01-06 11:10:00'),
-
-(95,'Barbie','https://image.tmdb.org/t/p/w500/iuFNMS8U5cb6xfzi51Dbkovj7vM.jpg','Barbie leaves her perfect world for the real one.','Prime Video',7.2,12,'Comedy, Fantasy','114m',2023,'https://www.youtube.com/watch?v=pBk4NYhWNMM','Movie','uk','','','on','','','','','','','','','on','','','','','','','on','','','','','','','','','2026-01-06 11:10:00','2026-01-06 11:10:00'),
-
-(96,'House of the Dragon','https://image.tmdb.org/t/p/w500/z2yahl2uefxDCl0nogcRBstwruJ.jpg','Civil war erupts within House Targaryen.','Now TV',8.5,18,'Drama, Fantasy','60m',2022,'https://www.youtube.com/watch?v=DotnJ7tTA34','TV Show','uk','','','','on','','','','','','','on','','','','','','','on','','','','','','','','','2026-01-06 11:10:00','2026-01-06 11:10:00'),
-
-(97,'Rebel Moon','https://image.tmdb.org/t/p/w500/6epeijccM3U4PSnqzpzXj9nH7hT.jpg','A colony fights back against a tyrannical empire.','Netflix',5.6,15,'Action, Science Fiction','133m',2023,'https://www.youtube.com/watch?v=_rHLOXbFZtI','Movie','us','on','','','','','','','','','on','','','','','','','','on','','','','','','','','','2026-01-06 11:10:00','2026-01-06 11:10:00'),
-
-(98,'The Holdovers','https://image.tmdb.org/t/p/w500/VHSzNBTwxYkC7Z6rYf5K5Gx2k6j.jpg','A teacher and students stay behind over Christmas.','Prime Video',8.0,12,'Comedy, Drama','133m',2023,'https://www.youtube.com/watch?v=AhKLpJmHhIg','Movie','us','','','on','','','','','','','','','on','','','','','','','','','','','','','','','','','2026-01-06 11:10:00','2026-01-06 11:10:00'),
-
-(99,'Bodies','https://image.tmdb.org/t/p/w500/uY9CqPpZ9U3X8PZ3g8Qz0A5Jx6P.jpg','Four detectives find the same body in different eras.','Netflix',7.4,15,'Crime, Science Fiction, Mystery','60m',2023,'https://www.youtube.com/watch?v=FSh6F8oGZ4Y','TV Show','uk','on','','','','','','','','','','','on','','','on','','','','','on','','','','','','','','','2026-01-06 11:10:00','2026-01-06 11:10:00'),
-
-(100,'The Creator','https://image.tmdb.org/t/p/w500/vBZ0qvaRxqEhZwl6LWmruJqWE8Z.jpg','Humanity battles advanced artificial intelligence.','Disney+',7.1,12,'Action, Science Fiction','133m',2023,'https://www.youtube.com/watch?v=ex3C1-5Dhb8','Movie','uk','','on','','','','','','','','','on','','','','','','','','on','','','','','','','','','2026-01-06 11:10:00','2026-01-06 11:10:00');
+'Movie',
+'us',
+'on',
+'on',
+'on',
+'2026-01-06 10:00:00',
+'2026-01-06 10:00:00');
+INSERT INTO moviesAndTvShows
+(id, name, poster, synopsis, availableOn, imdb, ageRating, genres, length, yearReleased, trailer, type, country, amazonPrime, action, adventure, scienceFiction, createdAt, updatedAt)
+VALUES
+(81,
+'Dune: Part Two',
+'https://image.tmdb.org/t/p/w500/1pdfLvkbY9ohJlCjQH2CZjjYVvJ.jpg',
+'Paul Atreides unites with the Fremen to wage war against his enemies.',
+'Prime Video',
+8.6,
+12,
+'Action, Adventure, Science Fiction',
+'166m',
+2024,
+'https://www.youtube.com/watch?v=Way9Dexny3w',
+'Movie',
+'uk',
+'on',
+'on',
+'on',
+'on',
+'2026-01-06 11:00:00',
+'2026-01-06 11:00:00');
+INSERT INTO moviesAndTvShows
+(id, name, poster, synopsis, availableOn, imdb, ageRating, genres, length, yearReleased, trailer, type, country, disneyPlus, comedy, drama, fantasy, createdAt, updatedAt)
+VALUES
+(82,
+'Poor Things',
+'https://image.tmdb.org/t/p/w500/kCGlIMHnOm8JPXq3rXM6c5wMxcT.jpg',
+'A young woman is brought back to life by an unorthodox scientist.',
+'Disney+',
+8.1,
+18,
+'Comedy, Drama, Fantasy',
+'141m',
+2023,
+'https://www.youtube.com/watch?v=RlbR5N6veqw',
+'Movie',
+'uk',
+'on',
+'on',
+'on',
+'on',
+'2026-01-06 11:00:00',
+'2026-01-06 11:00:00');
+INSERT INTO moviesAndTvShows
+(id, name, poster, synopsis, availableOn, imdb, ageRating, genres, length, yearReleased, trailer, type, country, amazonPrime, action, comedy, scienceFiction, createdAt, updatedAt)
+VALUES
+(83,
+'Everything Everywhere All at Once',
+'https://image.tmdb.org/t/p/w500/w3LxiVYdWWRvEVdn5RYq6jIqkb1.jpg',
+'An immigrant laundromat owner is swept into an insane multiverse adventure.',
+'Prime Video',
+7.8,
+15,
+'Action, Comedy, Science Fiction',
+'139m',
+2022,
+'https://www.youtube.com/watch?v=wxN1T1uxQ2g',
+'Movie',
+'us',
+'on',
+'on',
+'on',
+'on',
+'2026-01-06 11:30:00',
+'2026-01-06 11:30:00');
+INSERT INTO moviesAndTvShows
+(id, name, poster, synopsis, availableOn, imdb, ageRating, genres, length, yearReleased, trailer, type, country, amazonPrime, comedy, drama, createdAt, updatedAt)
+VALUES
+(84,
+'The Holdovers',
+'https://image.tmdb.org/t/p/w500/VHSzNBTwxV8vh7wylo7O9CLdac.jpg',
+'A grumpy teacher is forced to stay on campus over Christmas with students.',
+'Prime Video',
+7.9,
+12,
+'Comedy, Drama',
+'133m',
+2023,
+'https://www.youtube.com/watch?v=AhKLpJmHhIg',
+'Movie',
+'us',
+'on',
+'on',
+'on',
+'2026-01-06 11:30:00',
+'2026-01-06 11:30:00');
+INSERT INTO moviesAndTvShows
+(id, name, poster, synopsis, availableOn, imdb, ageRating, genres, length, yearReleased, trailer, type, country, appleTvPlus, drama, romance, createdAt, updatedAt)
+VALUES
+(85,
+'Past Lives',
+'https://image.tmdb.org/t/p/w500/k3waqVXSnvCZWfJYNtdamTgTtTA.jpg',
+'Two childhood friends reconnect decades later.',
+'Apple TV+',
+7.9,
+12,
+'Drama, Romance',
+'105m',
+2023,
+'https://www.youtube.com/watch?v=kA244xewjcI',
+'Movie',
+'us',
+'on',
+'on',
+'on',
+'2026-01-06 12:00:00',
+'2026-01-06 12:00:00');
+INSERT INTO moviesAndTvShows
+(id, name, poster, synopsis, availableOn, imdb, ageRating, genres, length, yearReleased, trailer, type, country, disneyPlus, comedy, drama, createdAt, updatedAt)
+VALUES
+(86,
+'The Banshees of Inisherin',
+'https://image.tmdb.org/t/p/w500/4yFG6cSPaCaPhyJ1vtGOtMD1lgh.jpg',
+'Two lifelong friends find themselves at an impasse.',
+'Disney+',
+7.7,
+15,
+'Comedy, Drama',
+'114m',
+2022,
+'https://www.youtube.com/watch?v=uRu3zLOJN2c',
+'Movie',
+'uk',
+'on',
+'on',
+'on',
+'2026-01-06 12:00:00',
+'2026-01-06 12:00:00');
+INSERT INTO moviesAndTvShows
+(id, name, poster, synopsis, availableOn, imdb, ageRating, genres, length, yearReleased, trailer, type, country, amazonPrime, drama, history, createdAt, updatedAt)
+VALUES
+(88,
+'Oppenheimer',
+'https://image.tmdb.org/t/p/w500/ptpr0kGAckfQkJeJIt8st5dglvd.jpg',
+'The story of J. Robert Oppenheimer and the atomic bomb.',
+'Prime Video',
+8.4,
+15,
+'Drama, History',
+'180m',
+2023,
+'https://www.youtube.com/watch?v=uYPbbksJxIg',
+'Movie',
+'us',
+'on',
+'on',
+'on',
+'2026-01-06 13:00:00',
+'2026-01-06 13:00:00');
+INSERT INTO moviesAndTvShows
+(id, name, poster, synopsis, availableOn, imdb, ageRating, genres, length, yearReleased, trailer, type, country, appleTvPlus, crime, drama, history, createdAt, updatedAt)
+VALUES
+(89,
+'Killers of the Flower Moon',
+'https://image.tmdb.org/t/p/w500/dB6Krk806zeqd0YNp2ngQ9zXteH.jpg',
+'Members of the Osage tribe are murdered under mysterious circumstances.',
+'Apple TV+',
+7.6,
+15,
+'Crime, Drama, History',
+'206m',
+2023,
+'https://www.youtube.com/watch?v=EP34Yoxs3FQ',
+'Movie',
+'us',
+'on',
+'on',
+'on',
+'on',
+'2026-01-06 13:00:00',
+'2026-01-06 13:00:00');

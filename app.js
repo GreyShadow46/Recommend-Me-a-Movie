@@ -9,6 +9,14 @@ const cookieParser = require('cookie-parser');
 const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
 const validator = require('validator');
+
+const host = process.env.DB_HOST || "";
+const mySQLUser = process.env.DB_USER || "";
+const mysSQLPassword = process.env.DB_PASSWORD || "";
+const database = process.env.DB_NAME || "";
+const encryptionKey = process.env.ENCRYPTION_KEY || "";
+const emailUser = process.env.EMAIL_USER || "";
+const emailPass = process.env.EMAIL_PASS || "";
 const { loadEnvFile } = require('node:process');
 loadEnvFile('.env');
 
@@ -60,24 +68,15 @@ app.use(session({
   name: 'sessionId'
 }));
 
-app.listen(8080, "0.0.0.0", () => {
-  console.log('Server running on http://0.0.0.0:8080');
+app.listen(appPort, "0.0.0.0", () => {
+  console.log(`Server running on http://localhost:8080`);
 });
-
-const host = process.env.DB_HOST || "";
-const port = parseInt(process.env.DB_PORT) || 0;
-const mySQLUser = process.env.DB_USER || "";
-const mysSQLPassword = process.env.DB_PASSWORD || "";
-const database = process.env.DB_NAME || "";
-const encryptionKey = process.env.ENCRYPTION_KEY || "";
-const emailUser = process.env.EMAIL_USER || "";
-const emailPass = process.env.EMAIL_PASS || "";
 
 // Create connection pool
 const pool = mysql.createPool({
   connectionLimit: 10,
   host: host,
-  port: port,
+  port: 3306,
   user: mySQLUser,
   password: mysSQLPassword,
   database: database,
@@ -108,7 +107,7 @@ function escapeHtml(unsafe) {
     .replace(/'/g, "&#039;");
 }
 
-function sendMail(name, email, subject, message) {
+function sendMail(greeting, name, email, subject, message) {
   // Validate inputs
   if (!validateEmail(email)) {
     console.error('Invalid email address');
@@ -130,7 +129,7 @@ function sendMail(name, email, subject, message) {
     html: `<!DOCTYPE html>
       <html><head><title>Recommend Me a Movie</title></head>
       <body><div>
-      <p>Hello ${escapeHtml(name)},</p>
+      <p>${greeting} ${escapeHtml(name)},</p>
       <p>${message}</p>
       </div></body></html>`
   };
@@ -304,7 +303,7 @@ app.post('/signup', (req, res) => {
           const host = req.headers['x-forwarded-host'] || req.get('host');
           const baseUrl = `${protocol}://${host}`;
 
-          sendMail(username, email, "Verify your Email", 
+          sendMail("Hello", username, email, "Verify your Email", 
             `Please press this <a href="${baseUrl}/${userCountry}/surveypage1">button</a> to verify your account`);
           
           // Save session before redirect
@@ -473,7 +472,7 @@ app.post('/forgotyourpassword', authLimiter, (req, res) => {
           const baseUrl = `${protocol}://${host}`;
 
           // Send password reset email with proper HTML link
-          sendMail(username, email, "Reset Your Password", 
+          sendMail("From", username, email, "Reset Your Password", 
             `Please click this <a href="${baseUrl}/resetyourpassword" style="color: #007bff; text-decoration: none; font-weight: bold;">button</a> to reset your password.`);
           res.redirect('/verifyemail');
         });

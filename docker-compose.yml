@@ -2,15 +2,13 @@ services:
   # MySQL Database
   db:
     image: mysql:8.0
-    env_file:
-      - .env
     container_name: movie_db
     restart: unless-stopped
     environment:
       MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
       MYSQL_DATABASE: ${DB_NAME}
-      MYSQL_USER: movieapp
-      MYSQL_PASSWORD: moviepass123
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
     volumes:
       - mysql_data:/var/lib/mysql
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql:ro
@@ -27,9 +25,9 @@ services:
 
   # Node.js Application
   app:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    build: 
+        context: .
+        dockerfile: Dockerfile
     container_name: movie_app
     restart: unless-stopped
     environment:
@@ -37,7 +35,7 @@ services:
       DB_HOST: ${DB_HOST}
       DB_PORT: 3306
       DB_USER: ${DB_USER}
-      DB_PASSWORD: ${DB_ROOT_PASSWORD}
+      DB_PASSWORD: ${DB_PASSWORD}
       DB_NAME: ${DB_NAME}
       SESSION_SECRET: ${SESSION_SECRET}
       ENCRYPTION_KEY: ${ENCRYPTION_KEY}

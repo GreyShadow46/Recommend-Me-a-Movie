@@ -13,9 +13,6 @@ RUN npm install --production
 # Copy application files
 COPY . .
 
-# Create public directory if it doesn't exist
-RUN mkdir -p public
-
 EXPOSE 8080
 
 # Start the application
