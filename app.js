@@ -304,7 +304,7 @@ app.post('/signup', (req, res) => {
           const baseUrl = `${protocol}://${host}`;
 
           sendMail("Hello", username, email, "Verify your Email", 
-            `Please press this <a href="${baseUrl}/${userCountry}/surveypage1">button</a> to verify your account`);
+            `Please press this <a href="${baseUrl}}/surveypage1">button</a> to verify your account`);
           
           // Save session before redirect
           req.session.user = {username: username};
