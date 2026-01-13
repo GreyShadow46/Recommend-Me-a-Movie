@@ -32,7 +32,7 @@ Before running the project, ensure you have:
 
 ```
 git clone https://github.com/GreyShadow46/Recommend-Me-a-Movie.git
-cd recommend-me-a-movie
+cd Recommend-Me-a-Movie
 ```
 
 ### 2. Configure environment variables
@@ -55,7 +55,7 @@ Then open `.env` and fill in your own values:
 Run the full stack using Docker Compose:
 
 ```
-docker compose up -d
+docker compose up -d --build
 ```
 
 This will automatically start:
@@ -83,3 +83,6 @@ The MySQL container automatically initializes using the `init.sql` file included
 - The Node.js app runs in production mode inside the container.  
 - Static assets and logs are mounted as volumes for easier development.
 - The project is designed to run as a **multi‑container stack**
+
+## Development Notes
+Warning you may experience issues with the recommendation algorithm. I apologise and am working to fix it.

@@ -9,6 +9,8 @@ const cookieParser = require('cookie-parser');
 const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
 const validator = require('validator');
+const { loadEnvFile } = require('node:process');
+loadEnvFile('.env');
 
 const host = process.env.DB_HOST || "";
 const mySQLUser = process.env.DB_USER || "";
@@ -17,8 +19,6 @@ const database = process.env.DB_NAME || "";
 const encryptionKey = process.env.ENCRYPTION_KEY || "";
 const emailUser = process.env.EMAIL_USER || "";
 const emailPass = process.env.EMAIL_PASS || "";
-const { loadEnvFile } = require('node:process');
-loadEnvFile('.env');
 
 // Security middleware
 app.use(helmet({
@@ -68,7 +68,7 @@ app.use(session({
   name: 'sessionId'
 }));
 
-app.listen(appPort, "0.0.0.0", () => {
+app.listen(8080, "0.0.0.0", () => {
   console.log(`Server running on http://localhost:8080`);
 });
 
@@ -304,7 +304,7 @@ app.post('/signup', (req, res) => {
           const baseUrl = `${protocol}://${host}`;
 
           sendMail("Hello", username, email, "Verify your Email", 
-            `Please press this <a href="${baseUrl}}/surveypage1">button</a> to verify your account`);
+            `Please press this <a href="${baseUrl}/surveypage1">button</a> to verify your account`);
           
           // Save session before redirect
           req.session.user = {username: username};
@@ -635,7 +635,9 @@ app.post('/surveypage2', checkSignIn, function (req, res) {
         });
     }
   });
-  res.redirect('/surveypage3');
+  setTimeout(() => {
+    res.redirect('/surveypage3');
+  }, 500);
 });
 
 app.get('/surveypage3', checkSignIn, function (req, res) {
@@ -834,7 +836,7 @@ app.post('/recommendation', checkSignIn, function (req, res) {
       // Recursive call after insert
       return setTimeout(() => {
         req.app.handle(req, res);
-      }, 100);
+      }, 500);
     }
     
     let i = 0, j = 0;
@@ -855,44 +857,50 @@ app.post('/recommendation', checkSignIn, function (req, res) {
     const typeParam = preference !== "Both" ? [preference] : [];
     
     // First query - matching favorite genres
-    const query1 = `SELECT DISTINCT mats.name, mats.poster, mats.synopsis, mats.availableOn, mats.imdb, 
+    const query1 = `
+    SELECT DISTINCT 
+      mats.name, mats.poster, mats.synopsis, mats.availableOn, mats.imdb, 
       mats.ageRating, mats.genres, mats.length, mats.yearReleased, mats.trailer
-      FROM moviesAndTvShows mats 
-      INNER JOIN streamingServices ss ON ss.userName = ? 
-      INNER JOIN favouriteGenres fg ON fg.userName = ? 
-      INNER JOIN movieAge ma ON ma.userName = ? 
-      INNER JOIN suitableAgeRatings sar ON sar.userName = ? 
-      WHERE ((mats.netflix != '' AND mats.netflix = ss.netflix) 
-        OR (mats.disneyPlus != '' AND mats.disneyPlus = ss.disneyPlus) 
-        OR (mats.amazonPrime != '' AND mats.amazonPrime = ss.amazonPrime) 
-        OR (mats.nowTv != '' AND mats.nowTv = ss.nowTv) 
-        OR (mats.appleTvPlus != '' AND mats.appleTvPlus = ss.appleTvPlus) 
-        OR (mats.peacock != '' AND mats.peacock = ss.peacock) 
-        OR (mats.hulu != '' AND mats.hulu = ss.hulu) 
-        OR (mats.max != '' AND mats.max = ss.max)) 
-      AND ((mats.action != '' AND mats.action = fg.action) 
-        OR (mats.comedy != '' AND mats.comedy = fg.comedy) 
-        OR (mats.drama != '' AND mats.drama = fg.drama) 
-        OR (mats.adventure != '' AND mats.adventure = fg.adventure) 
-        OR (mats.crime != '' AND mats.crime = fg.crime) 
-        OR (mats.romance != '' AND mats.romance = fg.romance) 
-        OR (mats.scienceFiction != '' AND mats.scienceFiction = fg.scienceFiction) 
-        OR (mats.fantasy != '' AND mats.fantasy = fg.fantasy) 
-        OR (mats.family != '' AND mats.family = fg.family) 
-        OR (mats.mystery != '' AND mats.mystery = fg.mystery) 
-        OR (mats.biography != '' AND mats.biography = fg.biography) 
-        OR (mats.history != '' AND mats.history = fg.history) 
-        OR (mats.animation != '' AND mats.animation = fg.animation) 
-        OR (mats.music != '' AND mats.music = fg.music) 
-        OR (mats.sport != '' AND mats.sport = fg.sport) 
-        OR (mats.superhero != '' AND mats.superhero = fg.superhero) 
-        OR (mats.western != '' AND mats.western = fg.western) 
-        OR (mats.war != '' AND mats.war = fg.war) 
-        OR (mats.horror != '' AND mats.horror = fg.horror)) 
-      AND mats.yearReleased >= ma.preference 
-      AND mats.country = ? 
-      AND mats.ageRating <= sar.preference${typeCondition} 
-      ORDER BY mats.imdb DESC`;
+    FROM moviesAndTvShows mats
+    INNER JOIN streamingServices ss ON ss.userName = ?
+    INNER JOIN favouriteGenres fg ON fg.userName = ?
+    INNER JOIN movieAge ma ON ma.userName = ?
+    INNER JOIN suitableAgeRatings sar ON sar.userName = ?
+    WHERE (
+        (mats.netflix = 'on' AND ss.netflix = 'on')
+    OR (mats.disneyPlus = 'on' AND ss.disneyPlus = 'on')
+    OR (mats.amazonPrime = 'on' AND ss.amazonPrime = 'on')
+    OR (mats.nowTv = 'on' AND ss.nowTv = 'on')
+    OR (mats.appleTvPlus = 'on' AND ss.appleTvPlus = 'on')
+    OR (mats.peacock = 'on' AND ss.peacock = 'on')
+    OR (mats.hulu = 'on' AND ss.hulu = 'on')
+    OR (mats.max = 'on' AND ss.max = 'on')
+    )
+    AND (
+        (mats.action = 'on' AND fg.action = 'on')
+    OR (mats.comedy = 'on' AND fg.comedy = 'on')
+    OR (mats.drama = 'on' AND fg.drama = 'on')
+    OR (mats.adventure = 'on' AND fg.adventure = 'on')
+    OR (mats.crime = 'on' AND fg.crime = 'on')
+    OR (mats.romance = 'on' AND fg.romance = 'on')
+    OR (mats.scienceFiction = 'on' AND fg.scienceFiction = 'on')
+    OR (mats.fantasy = 'on' AND fg.fantasy = 'on')
+    OR (mats.family = 'on' AND fg.family = 'on')
+    OR (mats.mystery = 'on' AND fg.mystery = 'on')
+    OR (mats.biography = 'on' AND fg.biography = 'on')
+    OR (mats.history = 'on' AND fg.history = 'on')
+    OR (mats.animation = 'on' AND fg.animation = 'on')
+    OR (mats.music = 'on' AND fg.music = 'on')
+    OR (mats.sport = 'on' AND fg.sport = 'on')
+    OR (mats.superhero = 'on' AND fg.superhero = 'on')
+    OR (mats.western = 'on' AND fg.western = 'on')
+    OR (mats.war = 'on' AND fg.war = 'on')
+    OR (mats.horror = 'on' AND fg.horror = 'on')
+    )
+    AND mats.yearReleased >= ma.preference
+    AND mats.country = ?
+    AND mats.ageRating <= sar.preference${typeCondition}
+    ORDER BY mats.imdb DESC`;
     
     pool.query(query1, [username, username, username, username, userCountry, ...typeParam], function (err, result1) {
       if (err) {
@@ -931,41 +939,48 @@ app.post('/recommendation', checkSignIn, function (req, res) {
         res.redirect('/recommendation');
       } else {
         // Second query - broader recommendations excluding least favorites
-        const query2 = `SELECT DISTINCT mats.name, mats.poster, mats.synopsis, mats.availableOn, mats.imdb, 
-          mats.ageRating, mats.genres, mats.length, mats.yearReleased, mats.trailer 
-          FROM moviesAndTvShows mats 
-          INNER JOIN streamingServices ss ON ss.userName = ? 
-          INNER JOIN leastFavouriteGenres lfg ON lfg.userName = ? 
-          INNER JOIN movieAge ma ON ma.userName = ? 
-          INNER JOIN suitableAgeRatings sar ON sar.userName = ? 
-          WHERE ((mats.netflix != '' AND mats.netflix = ss.netflix) 
-            OR (mats.disneyPlus != '' AND mats.disneyPlus = ss.disneyPlus) 
-            OR (mats.amazonPrime != '' AND mats.amazonPrime = ss.amazonPrime) 
-            OR (mats.nowTv != '' AND mats.nowTv = ss.nowTv) 
-            OR (mats.appleTvPlus != '' AND mats.appleTvPlus = ss.appleTvPlus)) 
-          AND ((mats.action = '' OR mats.action != lfg.action) 
-            AND (mats.comedy = '' OR mats.comedy != lfg.comedy) 
-            AND (mats.drama = '' OR mats.drama != lfg.drama) 
-            AND (mats.adventure = '' OR mats.adventure != lfg.adventure) 
-            AND (mats.crime = '' OR mats.crime != lfg.crime) 
-            AND (mats.romance = '' OR mats.romance != lfg.romance) 
-            AND (mats.scienceFiction = '' OR mats.scienceFiction != lfg.scienceFiction) 
-            AND (mats.fantasy = '' OR mats.fantasy != lfg.fantasy) 
-            AND (mats.family = '' OR mats.family != lfg.family) 
-            AND (mats.mystery = '' OR mats.mystery != lfg.mystery) 
-            AND (mats.biography = '' OR mats.biography != lfg.biography) 
-            AND (mats.history = '' OR mats.history != lfg.history) 
-            AND (mats.animation = '' OR mats.animation != lfg.animation) 
-            AND (mats.music = '' OR mats.music != lfg.music) 
-            AND (mats.sport = '' OR mats.sport != lfg.sport) 
-            AND (mats.superhero = '' OR mats.superhero != lfg.superhero) 
-            AND (mats.western = '' OR mats.western != lfg.western) 
-            AND (mats.war = '' OR mats.war != lfg.war) 
-            AND (mats.horror = '' OR mats.horror != lfg.horror)) 
-          AND mats.yearReleased >= ma.preference 
-          AND mats.country = ? 
-          AND mats.ageRating <= sar.preference${typeCondition} 
-          ORDER BY mats.imdb DESC`;
+        const query2 = `
+        SELECT DISTINCT 
+          mats.name, mats.poster, mats.synopsis, mats.availableOn, mats.imdb, 
+          mats.ageRating, mats.genres, mats.length, mats.yearReleased, mats.trailer
+        FROM moviesAndTvShows mats
+        INNER JOIN streamingServices ss ON ss.userName = ?
+        INNER JOIN leastFavouriteGenres lfg ON lfg.userName = ?
+        INNER JOIN movieAge ma ON ma.userName = ?
+        INNER JOIN suitableAgeRatings sar ON sar.userName = ?
+        WHERE (
+            (mats.netflix = 'on' AND ss.netflix = 'on')
+        OR (mats.disneyPlus = 'on' AND ss.disneyPlus = 'on')
+        OR (mats.amazonPrime = 'on' AND ss.amazonPrime = 'on')
+        OR (mats.nowTv = 'on' AND ss.nowTv = 'on')
+        OR (mats.appleTvPlus = 'on' AND ss.appleTvPlus = 'on')
+        )
+        AND NOT (
+            (mats.action = 'on' AND lfg.action = 'on')
+        OR (mats.comedy = 'on' AND lfg.comedy = 'on')
+        OR (mats.drama = 'on' AND lfg.drama = 'on')
+        OR (mats.adventure = 'on' AND lfg.adventure = 'on')
+        OR (mats.crime = 'on' AND lfg.crime = 'on')
+        OR (mats.romance = 'on' AND lfg.romance = 'on')
+        OR (mats.scienceFiction = 'on' AND lfg.scienceFiction = 'on')
+        OR (mats.fantasy = 'on' AND lfg.fantasy = 'on')
+        OR (mats.family = 'on' AND lfg.family = 'on')
+        OR (mats.mystery = 'on' AND lfg.mystery = 'on')
+        OR (mats.biography = 'on' AND lfg.biography = 'on')
+        OR (mats.history = 'on' AND lfg.history = 'on')
+        OR (mats.animation = 'on' AND lfg.animation = 'on')
+        OR (mats.music = 'on' AND lfg.music = 'on')
+        OR (mats.sport = 'on' AND lfg.sport = 'on')
+        OR (mats.superhero = 'on' AND lfg.superhero = 'on')
+        OR (mats.western = 'on' AND lfg.western = 'on')
+        OR (mats.war = 'on' AND lfg.war = 'on')
+        OR (mats.horror = 'on' AND lfg.horror = 'on')
+        )
+        AND mats.yearReleased >= ma.preference
+        AND mats.country = ?
+        AND mats.ageRating <= sar.preference${typeCondition}
+        ORDER BY mats.imdb DESC`;
+
         
         pool.query(query2, [username, username, username, username, userCountry, ...typeParam], function (err, result2) {
           if (err) {
