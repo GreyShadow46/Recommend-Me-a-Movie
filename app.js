@@ -845,12 +845,15 @@ app.post('/recommendation', checkSignIn, function (req, res) {
     if(preference === "Movie"){
       i = result[0].movieIndex1;
       j = result[0].movieIndex2;
-    } else if(preference === "TVShow"){
+    } else if(preference === "TV Show"){
       i = result[0].tvIndex1;
       j = result[0].tvIndex2;
     } else if(preference === "Both"){
       i = result[0].bothIndex1;
       j = result[0].bothIndex2;
+    } else {
+      req.session.warningMessage = "An error occurred";
+      return res.redirect('/surveypage6');
     }
     
     const typeCondition = preference !== "Both" ? " AND mats.type = ?" : "";

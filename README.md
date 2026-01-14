@@ -40,7 +40,7 @@ cd Recommend-Me-a-Movie
 Copy the example file:
 
 ```
-cp .env.example .env
+cp .env example .env
 ```
 
 Then open `.env` and fill in your own values:
@@ -49,6 +49,13 @@ Then open `.env` and fill in your own values:
 - Session secret  
 - Email credentials 
 - Encryption key  
+
+If this doesn't work alternatively you can run:
+```
+notepad .env example
+```
+
+You will need to rename the file to `.env`
 
 ### 3. Start the application
 
@@ -83,6 +90,3 @@ The MySQL container automatically initializes using the `init.sql` file included
 - The Node.js app runs in production mode inside the container.  
 - Static assets and logs are mounted as volumes for easier development.
 - The project is designed to run as a **multi‑container stack**
-
-## Development Notes
-Warning you may experience issues with the recommendation algorithm. I apologise and am working to fix it.
